@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -20,6 +22,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 
@@ -44,7 +48,7 @@ public class Usuario implements Serializable{
 	private String password; 
 	private boolean enabled; 
 	
-	@NotNull
+	@NotNull 
 	@Length(min = 3,message = "El nombre debe tener 3 caracteres")
 	private String nombre; 	
 	@NotNull
@@ -64,8 +68,17 @@ public class Usuario implements Serializable{
 					inverseJoinColumns = @JoinColumn(name="role_id")) //estyo solo si quiueremos cambiar el name
 	private List<Role> roles;
 
-	//@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	//private Perfil perfil;
+	
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
+	@JoinColumn(name = "usuario_id")
+	private List<Bolsa> productos;  
+	
+	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
+	@JoinColumn(name = "usuario_id")
+	private List<Compra> compras;  
 	
 	
 	public Usuario() {
@@ -134,12 +147,17 @@ public class Usuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email; 
 	}
+	
+	
+
+
 
 	@Override
 	public String toString() {
 
 		return super.toString();
 	} 
+	
 	
 	
 }

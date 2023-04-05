@@ -54,6 +54,8 @@ public class UsuarioController {
 
 	@Autowired
 	IUsuarioService usuarioService; 
+
+	
 	@Autowired 
 	IFileService fileService; 
 	
@@ -89,9 +91,13 @@ public class UsuarioController {
 			try {
    
 				List<Role> roles =  Arrays.asList(usuarioService.getRoleByName("ROLE_USER")); 
-				   
+	
+				
+				
+				
 				//roles.add(role);				 
 				usuario.setRoles(roles); 
+				
 				usuario.setEnabled(true);
 				usuario.setPassword( passwordEncoder.encode( usuario.getPassword() )); 
 				Usuario nuevoUsuario = usuarioService.save(usuario); 
@@ -190,7 +196,7 @@ public class UsuarioController {
 			perfilActual.setEdad(perfil.getEdad());
 			  
 			//perfilActual.setFoto(perfil.getFoto());
-			perfilActual.setPeso(perfil.getPeso());
+			//perfilActual.setPeso(perfil.getPeso());
 	
 
 			
@@ -208,21 +214,25 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/hola")
-	public List<String> index() {   
+	public Map<String,Object> index() {   
 		System.out.println("ENTRA");
 		List<String> milista =new  ArrayList<String>(); 
-		milista.add("GOLA"); 
-		milista.add("Richie"); 
+		milista.add("hola"); 
+		milista.add("VIctor"); 
+		milista.add("cristobal");
+		milista.add("Zury");
+		Map<String, Object> response = new HashMap<>();
+		response.put("objeto", milista); 
 		 
 		
-		return milista; 
+		return response; 
 	}
 	
 	
 	
 	
 	@PostMapping("/usuarios/upload")
-	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public ResponseEntity<?> upload(@RequestParam(name = "file") MultipartFile archivo, @RequestParam("username") String username){
 		
 		Map<String, Object> response = new HashMap<>();
@@ -425,11 +435,7 @@ public class UsuarioController {
 	}
 	
 	
-	@GetMapping("/users/alumnos/{instructor}")
-	@Secured({"ROLE_ADMIN","ROLE_INSTRUCTOR"})
-	public List<Perfil> getAlumnos(@PathVariable String instructor){
-		return usuarioService.getPerfilesByInstructor(instructor); 
-	}
+
 	
 	
 	

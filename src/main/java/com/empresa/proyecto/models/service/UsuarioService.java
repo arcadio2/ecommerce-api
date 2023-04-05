@@ -28,8 +28,10 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
 	@Autowired
 	private IPerfilDao perfilDao; 
+	
 	@Autowired
 	private ISexoDao sexoDao;
 	
@@ -162,12 +164,6 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 	public void deleteProfile(Perfil perfil) {
 		perfilDao.delete(perfil);
 		
-	}
-
-
-	@Override
-	public List<Perfil> getPerfilesByInstructor(String instructor) {
-		return perfilDao.getPerfilesByInstructor(instructor);
 	}
 
 

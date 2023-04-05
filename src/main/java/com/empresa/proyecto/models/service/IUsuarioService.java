@@ -34,7 +34,6 @@ public interface IUsuarioService {
 
 	
 	public List<Usuario> getUsuariosByRole(String role); 
-	public List<Perfil> getPerfilesByInstructor(String instructor); 
 	public List<Perfil> getAllProfiles(); 
 	
 	public List<Perfil> getPerfilByRole(String nombre); 

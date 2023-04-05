@@ -10,10 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -35,11 +38,12 @@ public class Perfil implements Serializable{
 	@OneToOne 
 	@NotNull(message = "Requieres de un usuario para guardar tu perfil")
 	private Usuario usuario; 
-	
+	 
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull(message = "Ingrese un sexo") 
 	private Sexo sexo; 
+	
 	
 	private String foto;
 	 
@@ -47,19 +51,34 @@ public class Perfil implements Serializable{
 	@Max(value = 90, message = "No puede ingresar una edad tan alta")
 	private Integer edad; 
 	
-	@DecimalMin(value = "30",message = "No puedes ingresar un peso tan bajo")
-	@DecimalMax(value = "200",message = "No puedes ingresar un peso tan alto")
-	private Double peso; 
+	//@DecimalMin(value = "30",message = "No puedes ingresar un peso tan bajo")
+	//@DecimalMax(value = "200",message = "No puedes ingresar un peso tan alto")
+	//private Double peso;  
 	
-	@DecimalMin(value = "1.4",message = "No puedes ingresar una estatura tan baja en metros")
-	@DecimalMax(value = "2.1",message = "No puedes ingresar una estatura tan alta en metros")
+	@DecimalMin(value = "1.1",message = "No puedes ingresar una estatura tan baja en metros")
+	@DecimalMax(value = "2.3",message = "No puedes ingresar una estatura tan alta en metros")
 	private Double altura;
+	
+	@DecimalMin(value = "30",message = "No puedes ingresar una talla tan baja")
+	@DecimalMax(value = "200",message = "No puedes ingresar una talla tan alto")
+	private Double talla_camisa; 
+	
+	@DecimalMin(value = "18",message = "No puedes ingresar una talla tan baja")
+	@DecimalMax(value = "100",message = "No puedes ingresar una talla tan alto")
+	private Double talla_pantalon; 
 
+	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinTable(name = "perfil_direcciones", joinColumns = @JoinColumn(name="perfil_id"),
+					uniqueConstraints =  {@UniqueConstraint(columnNames = {"perfil_id","direccion_id"})} , 
+					inverseJoinColumns = @JoinColumn(name="direccion_id"))
+	private List<Direccion> direcciones; 
+	
+	//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	//@ManyToOne(fetch = FetchType.LAZY)
+	//private Bolsa bolsa; 
 	
 	
 	
-	
-	private String instructor;
 	 
 	public Long getId() {
 		return id;
@@ -101,13 +120,13 @@ public class Perfil implements Serializable{
 		this.edad = edad;
 	}
 
-	public Double getPeso() {
+	/*public Double getPeso() {
 		return peso;
 	}
 
 	public void setPeso(Double peso) {
 		this.peso = peso;
-	}
+	}*/
 
 	public Double getAltura() {
 		return altura;
@@ -119,13 +138,7 @@ public class Perfil implements Serializable{
 
 	
 
-	public String getInstructor() {
-		return instructor;
-	}
 
-	public void setInstructor(String instructor) {
-		this.instructor = instructor;
-	} 
 	
 	
 	
