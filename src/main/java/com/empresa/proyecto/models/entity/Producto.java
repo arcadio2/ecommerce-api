@@ -41,7 +41,7 @@ public class Producto implements Serializable{
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
 	@JoinColumn(name = "producto_id")
-	private List<Talla> tallas; 
+	private List<ColorProducto> colores; 
 	 
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
