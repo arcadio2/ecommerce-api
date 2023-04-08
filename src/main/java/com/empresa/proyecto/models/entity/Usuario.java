@@ -23,6 +23,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -38,7 +39,6 @@ public class Usuario implements Serializable{
 	private Long id;
 	
 	@Column(unique = true,length = 20) 
-	
 	@NotNull 
 	@Length(min = 3,message = "El nombre de usuario debe tener 3 caracteres")
 	private String username; 
@@ -60,7 +60,7 @@ public class Usuario implements Serializable{
 	 
 	  
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) //crea tabla intermedia usuario_roles
-	
+	@JsonIgnore
 	@JoinTable(name = "usuario_roles", 
 					joinColumns = @JoinColumn(name="usuario_id"),
 					//usuario_id y role_id no se puede repetir ese conjunto	
@@ -147,16 +147,20 @@ public class Usuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email; 
 	}
-	
-	
-
-
 
 	@Override
 	public String toString() {
+		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", roles=" + roles
+				+ ", productos=" + productos + ", compras=" + compras + "]";
+	}
+	
+	
 
-		return super.toString();
-	} 
+
+
+	
+	
 	
 	
 	

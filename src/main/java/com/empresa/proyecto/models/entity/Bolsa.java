@@ -22,7 +22,7 @@ private static final long serialVersionUID = 1L;
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Producto producto; 
+	private DetalleProducto detalle_producto ; 
 	 
 	private Integer cantidad; 
 	/*

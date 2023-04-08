@@ -8,40 +8,34 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "categoria_producto")
-public class CategoriaProducto implements Serializable{
+@Table(name = "colores") 
+public class Color implements Serializable{
+	
 	private static final long serialVersionUID = 1L;
-
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	 
+	private Long Id; 
 	
-	private String tipo;
-
+	private String color;
 
 	public Long getId() {
-		return id;
+		return Id;
 	}
-
 
 	public void setId(Long id) {
-		this.id = id;
+		Id = id;
 	}
 
-
-	public String getTipo() {
-		return tipo;
+	public String getColor() {
+		return color;
 	}
 
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setColor(String color) {
+		this.color = color;
 	} 
-	
-	
+
 	
 	
 }

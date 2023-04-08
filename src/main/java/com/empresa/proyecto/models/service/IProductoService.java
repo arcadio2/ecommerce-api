@@ -6,8 +6,17 @@ import com.empresa.proyecto.models.entity.Producto;
 
 public interface IProductoService {
 	
-	public Producto getByNombre(); 
+	public List<Producto> findAll(); 
 	
-	public List<Producto> findByNombre(); 
+	public Producto getByNombre(String nombre); 
+	
+	public List<Producto> findByNombre(String nombre); 
+	
+	public Producto findById(Long id); 
+	
+	public Producto save(Producto producto); 
+	
+	public void delete(Producto producto); 
 
+	
 }

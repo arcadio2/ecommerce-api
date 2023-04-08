@@ -91,11 +91,7 @@ public class UsuarioController {
 			try {
    
 				List<Role> roles =  Arrays.asList(usuarioService.getRoleByName("ROLE_USER")); 
-	
-				
-				
-				
-				//roles.add(role);				 
+		 
 				usuario.setRoles(roles); 
 				
 				usuario.setEnabled(true);

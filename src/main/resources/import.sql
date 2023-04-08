@@ -33,23 +33,38 @@ insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","pl
 insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","pantalon verde",10,2);
 insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","camisa verde",10,3);
 
-insert into tallas(talla,producto_id,stock) values (17,1,1); 
-insert into tallas(talla,producto_id,stock) values (19,1,2);
-insert into tallas(talla,producto_id,stock) values (21,1,3);
+insert into colores(color) values ("rojo"); 
+insert into colores(color) values ("verde"); 
+insert into colores(color) values ("azul"); 
 
-insert into tallas(talla,producto_id,stock) values (28,2,3);
-insert into tallas(talla,producto_id,stock) values (30,2,3);
+insert into tallas(talla) values ("L");
+insert into tallas(talla) values ("XL");
+insert into tallas(talla) values ("S");
+insert into tallas(talla) values ("XS");
+insert into tallas(talla) values ("M");
 
-insert into tallas(talla,producto_id,stock) values (17,3,10);
-insert into tallas(talla,producto_id,stock) values (23,3,10);      
+
+insert into detalle_producto(color_id,producto_id,talla_id) values (1,1,1);
+insert into detalle_producto(color_id,producto_id,talla_id) values (2,1,2);
+insert into detalle_producto(color_id,producto_id,talla_id) values (3,1,1);
+
+insert into detalle_producto(color_id,producto_id) values (1,2);
+insert into detalle_producto(color_id,producto_id) values (2,2);
+insert into detalle_producto(color_id,producto_id) values (3,2);
+
+insert into detalle_producto(color_id,producto_id) values (1,3);
+insert into detalle_producto(color_id,producto_id) values (2,3);
+insert into detalle_producto(color_id,producto_id) values (3,3); 
+
+
   
 #bolsa
  
-insert into bolsa(cantidad,producto_id,usuario_id) values (2,1,1); 
-insert into bolsa(cantidad,producto_id,usuario_id) values (3,3,1); 
+insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 
+insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (3,3,1); 
 
 
-insert into bolsa(cantidad,producto_id,usuario_id) values (2,2,2); 
+insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,2,2); 
 
 
 

@@ -1,37 +1,79 @@
 package com.empresa.proyecto.models.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "compras")
-public class Compra implements Serializable{
-	private static final long serialVersionUID = 1L;
 
+
+@Entity
+@Table(name = "detalle_producto") 
+public class DetalleProducto implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Usuario usuario;  
+	private Color color; 
 	
+	private Integer stock; 
+	 
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
-	private DetalleProducto detalle_producto; 
-	
-	private String codigo_seguimiento; 
-	
-	
-	
+	private Talla talla;
 
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
+	public Talla getTalla() {
+		return talla;
+	}
+
+	public void setTalla(Talla talla) {
+		this.talla = talla;
+	} 
+	
+	
+	
+	
+	
+	
+	
 }

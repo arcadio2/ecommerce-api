@@ -9,19 +9,33 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
 @Entity
-@Table(name = "tallas")
+@Table(name = "tallas") 
 public class Talla implements Serializable{
-	private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
-	private Integer stock; 
-	//private String tipo_ropa;   
 	
-	private Double talla; 
+	private String talla;
+
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long id) {
+		Id = id;
+	}
+
+	public String getTalla() {
+		return talla;
+	}
+
+	public void setTalla(String talla) {
+		this.talla = talla;
+	} 
+	
 	
 	
 }
