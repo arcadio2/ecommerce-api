@@ -39,6 +39,10 @@ public class Comentarios implements Serializable{
 	 
 	 
 	private String comentario;
+	
+	private Double valoracion; 
+	
+	
  
 
 	public Long getId() {
@@ -78,6 +82,18 @@ public class Comentarios implements Serializable{
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
+	}
+	
+	
+
+
+	public Double getValoracion() {
+		return valoracion;
+	}
+
+
+	public void setValoracion(Double valoracion) {
+		this.valoracion = valoracion;
 	}
 
 

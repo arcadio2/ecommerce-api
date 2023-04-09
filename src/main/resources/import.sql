@@ -75,7 +75,7 @@ insert into comentarios(producto_id,usuario_id,comentario) values (1,2,"Muy mal 
 insert into comentarios(producto_id,usuario_id,comentario) values (2,2,"Muy buen producto");
 
 
-insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,1,5); 
-insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,2,3.5); 
+#insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,1,5); 
+#insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,2,3.5); 
 
 

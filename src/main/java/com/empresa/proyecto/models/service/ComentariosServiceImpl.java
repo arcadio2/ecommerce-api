@@ -16,6 +16,12 @@ public class ComentariosServiceImpl implements IComentariosService{
 	public Comentarios save(Comentarios comentario) {
 		return comentarioDao.save(comentario);
 	}
+
+	@Override
+	public Comentarios getByUsernameAndPerfil(String username, Long id) {
+		// TODO Auto-generated method stub
+		return comentarioDao.getByUsernameAndProducto(username, id);
+	}
 	
 	
 	

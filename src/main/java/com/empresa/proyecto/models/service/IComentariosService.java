@@ -6,4 +6,6 @@ public interface IComentariosService {
 
 	public Comentarios save(Comentarios comentario); 
 	
+	public Comentarios getByUsernameAndPerfil(String username,Long id); 
+	
 }

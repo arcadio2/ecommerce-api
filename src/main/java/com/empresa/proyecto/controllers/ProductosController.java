@@ -22,13 +22,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.entity.Comentarios;
+import com.empresa.proyecto.models.entity.ComentariosDto;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Producto;
-import com.empresa.proyecto.models.entity.Valoracion;
+
 import com.empresa.proyecto.models.service.IComentariosService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
-import com.empresa.proyecto.models.service.IValoracionService;
+
 import com.empresa.proyecto.services.IValidationService;
 
 @RestController
@@ -45,8 +46,7 @@ public class ProductosController {
 	@Autowired
 	IUsuarioService usuarioService; 
 	
-	@Autowired
-	IValoracionService valoracionService; 
+
 	
 	
 	@Autowired
@@ -176,38 +176,14 @@ public class ProductosController {
 			
 	}
 	
-	@Secured({"ROLE_USER"})
-	@PostMapping("/valoracion")
-	public ResponseEntity<?> addValoracion(@RequestBody @Valid Valoracion valoracion, BindingResult result){
-			
-		
-		Map<String, Object> response = new HashMap<>();
-		
-		if(result.hasErrors()) {
 
-			response = validationService.responseErrors(result);
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
-		}  
-		
-		try {
-			Valoracion valoracion_saved = valoracionService.save(valoracion); 
-			response.put("mensaje", "La valoración ha sido agregada con éxito");
-			response.put("valoracion",valoracion_saved); 
-			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
-			
-		}catch(Exception e) {
-			response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
-			System.out.println(e.getMessage());
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
-		}
-	
-			
-	}
-	
 	@Secured({"ROLE_USER"})
 	@PostMapping("/comentario")
-	public ResponseEntity<?> addComentario2(@RequestBody @Valid Comentarios comentario, BindingResult result){
+	public ResponseEntity<?> addComentario2(@RequestBody @Valid ComentariosDto comentarioDto, BindingResult result){
 			
+		
+		
+		
 		
 		Map<String, Object> response = new HashMap<>();
 		
@@ -217,10 +193,39 @@ public class ProductosController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 		}  
 		
+		
+		Comentarios comentario = new Comentarios(); 
+		comentario.setComentario(comentarioDto.getComentario()); 
+		comentario.setProducto(comentarioDto.getProducto()); 
+		comentario.setUsuario(comentarioDto.getUsuario()); 
+		comentario.setValoracion(comentarioDto.getValoracion());
+		
+		Comentarios existente = null; 
 		try {
+			
+			existente = comentarioService.getByUsernameAndPerfil(
+					comentario.getUsuario().getUsername(), 
+					comentario.getProducto().getId()); 
+			
+		}catch(Exception e) {
+			
+		}
+		System.out.println("XD"+existente);
+		if(existente != null) {
+			
+			comentario.setId(existente.getId()); 
+		}
+		
+		try {
+			
 			Comentarios comentario_saved = comentarioService.save(comentario); 
-			response.put("mensaje", "El comentario ha sido agregado con éxito");
-			response.put("valoracion",comentario_saved); 
+			if(existente!=null) {
+				response.put("mensaje", "El comentario ha sido editado con éxito");
+			}else {
+				response.put("mensaje", "El comentario ha sido agregado con éxito");
+			}
+			
+			response.put("comentario",comentario_saved); 
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 			
 		}catch(Exception e) {
@@ -232,23 +237,25 @@ public class ProductosController {
 			
 	}
 	
-	@GetMapping("/valoracion/{username}/{producto_id}")
+
+	
+	@GetMapping("/comentarios/{username}/{producto_id}")
 	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
-	public ResponseEntity<?> perfil(@PathVariable String username, @PathVariable Long producto_id){
+	public ResponseEntity<?> getComentariosByU(@PathVariable String username, @PathVariable Long producto_id){
 		Map<String, Object> response = new HashMap<>();
-		Valoracion valoracion = null;  
+		Comentarios comentario = null;  
 		try {
-			valoracion = valoracionService.getByUsernameAndProducto(username,producto_id);
+			comentario = comentarioService.getByUsernameAndPerfil(username,producto_id);
 		}catch(Exception e) {
-			response.put("error", "No se encontró la valoración"); 
+			response.put("error", "No se encontró el comentario"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
-		if(valoracion == null) {
-			response.put("error", "No se ha encontrado la valoracion"); 
+		if(comentario == null) {
+			response.put("error", "No se ha encontrado el comentario"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
-		response.put("mensaje", "Se ha encontrado la valoración"); 
-		response.put("valoracion", valoracion); 
+		response.put("mensaje", "Se ha encontrado el comentario"); 
+		response.put("valoracion", comentario); 
 		
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
 	}
