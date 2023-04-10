@@ -13,7 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -37,7 +39,17 @@ public class DetalleProducto implements Serializable{
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Talla talla;
-
+	
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Producto producto;
+	
+	@Transient
+	private String nombre_producto; 
+	
+	
 	public Long getId() {
 		return Id;
 	}
@@ -68,7 +80,25 @@ public class DetalleProducto implements Serializable{
 
 	public void setTalla(Talla talla) {
 		this.talla = talla;
-	} 
+	}
+
+	public Producto getProducto() {
+		return producto;
+	}
+
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
+
+	public String getNombre_producto() {
+		return this.producto.getNombre();
+	}
+
+	public void setNombre_producto(String nombre_producto) {
+		this.nombre_producto = nombre_producto;
+	}
+
+
 	
 	
 	

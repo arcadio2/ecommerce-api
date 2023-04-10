@@ -41,6 +41,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.empresa.proyecto.models.entity.Usuario;
 
 import com.empresa.proyecto.models.entity.Perfil;
+import com.empresa.proyecto.models.entity.Producto;
 import com.empresa.proyecto.models.entity.Role;
 
 import com.empresa.proyecto.models.service.IUsuarioService;
@@ -425,9 +426,31 @@ public class UsuarioController {
 	} 
 	
 	@GetMapping("/users/perfiles/{nombre}")
-	@Secured({"ROLE_ADMIN","ROLE_INSTRUCTOR","ROLE_USER"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public List<Perfil> getPerfilesByRole(@PathVariable String nombre){
 		return usuarioService.getPerfilByRole(nombre);
+	}
+	
+	@GetMapping("/users/{username}")
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	public ResponseEntity<?> getUsuarioByUsernme(@PathVariable String username){
+		Map<String, Object> response = new HashMap<>();
+		
+		Usuario usuario_response = null; 
+		try {
+			usuario_response = usuarioService.findByUsername(username); 
+		}catch(Exception e) {
+			response.put("error", "No se encontró el usuario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		if(usuario_response==null) {
+			response.put("error", "No se encontró el usuario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("mensaje", "Se ha encontrado el usuario"); 
+		response.put("usuario", usuario_response); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
 	}
 	
 	

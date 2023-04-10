@@ -136,6 +136,30 @@ public class Perfil implements Serializable{
 		this.altura = altura;
 	}
 
+	public Double getTalla_camisa() {
+		return talla_camisa;
+	}
+
+	public void setTalla_camisa(Double talla_camisa) {
+		this.talla_camisa = talla_camisa;
+	}
+
+	public Double getTalla_pantalon() {
+		return talla_pantalon;
+	}
+
+	public void setTalla_pantalon(Double talla_pantalon) {
+		this.talla_pantalon = talla_pantalon;
+	}
+
+	public List<Direccion> getDirecciones() {
+		return direcciones;
+	}
+
+	public void setDirecciones(List<Direccion> direcciones) {
+		this.direcciones = direcciones;
+	}
+
 	
 
 

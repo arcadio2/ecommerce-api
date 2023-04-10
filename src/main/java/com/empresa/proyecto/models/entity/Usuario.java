@@ -73,7 +73,7 @@ public class Usuario implements Serializable{
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
 	@JoinColumn(name = "usuario_id")
-	private List<Bolsa> productos;  
+	private List<Bolsa> bolsa;  
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
@@ -147,12 +147,30 @@ public class Usuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email; 
 	}
+	
+	
+
+	public List<Bolsa> getBolsa() {
+		return bolsa;
+	}
+
+	public void setBolsa(List<Bolsa> bolsa) {
+		this.bolsa = bolsa;
+	}
+
+	public List<Compra> getCompras() {
+		return compras;
+	}
+
+	public void setCompras(List<Compra> compras) {
+		this.compras = compras;
+	}
 
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
 				+ ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", roles=" + roles
-				+ ", productos=" + productos + ", compras=" + compras + "]";
+				+ ", productos=" + bolsa + ", compras=" + compras + "]";
 	}
 	
 	
