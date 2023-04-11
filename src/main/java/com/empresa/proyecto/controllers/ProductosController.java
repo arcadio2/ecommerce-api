@@ -16,17 +16,23 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.empresa.proyecto.models.dao.IDetalleProductoDao;
+import com.empresa.proyecto.models.entity.Bolsa;
 import com.empresa.proyecto.models.entity.Comentarios;
 import com.empresa.proyecto.models.entity.ComentariosDto;
+import com.empresa.proyecto.models.entity.DetalleProducto;
+import com.empresa.proyecto.models.entity.DetalleProductoDto;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Producto;
-
+import com.empresa.proyecto.models.service.IBolsaService;
 import com.empresa.proyecto.models.service.IComentariosService;
+import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
@@ -46,30 +52,44 @@ public class ProductosController {
 	@Autowired
 	IUsuarioService usuarioService; 
 	
-
+	@Autowired
+	IDetalleProductoService detalleService; 
 	
+	@Autowired
+	IBolsaService bolsaService; 
+
 	
 	@Autowired
 	IValidationService validationService; 
 	
 	@GetMapping("")
 	//@ResponseStatus(HttpStatus.OK)
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public List<Producto> getProductos(){
 		List<Producto> productos = productoService.findAll(); 
 		
 		return productos; 
+
+	}
+
+	@GetMapping("/get/{nombre}")
+	//@ResponseStatus(HttpStatus.OK)
+	public List<Producto> getProductosNombre(@PathVariable String nombre){
+		List<Producto> productos = productoService.findByNombre(nombre); 
 		
+		return productos; 
 	}
 	
-	@GetMapping("/{producto}")
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	
+	
+	@GetMapping("/producto/{producto}")
 	public ResponseEntity<?> getProducto(@PathVariable String producto){
 		Map<String, Object> response = new HashMap<>();
-		
+
 		Producto producto_response = null; 
 		try {
 			producto_response = productoService.getByNombre(producto); 
+			
+			
 		}catch(Exception e) {
 			response.put("error", "No se encontró el producto"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
@@ -83,6 +103,10 @@ public class ProductosController {
 		
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
 	}
+	
+	
+	
+	
 	
 	@PostMapping("/create")
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
@@ -261,6 +285,64 @@ public class ProductosController {
 	}
 	
 	
+	
+	
+	/*BOLSA*/
+	@PutMapping("/detalle")
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	public ResponseEntity<?> changeDetalle(@RequestBody DetalleProducto detalle){
+		Map<String, Object> response = new HashMap<>();
+		
+		DetalleProducto detalle_response = null; 
+		try {
+			detalle_response = detalleService.save(detalle); 
+			
+		}catch(Exception e) {
+			response.put("error", "No se encontró el producto"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		if(detalle_response==null) {
+			response.put("error", "No se encontró el producto"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("mensaje", "Se ha encontrado el producto"); 
+		response.put("detalle", detalle_response); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
+	}
+	
+	
+	@PutMapping("/bolsa")
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	public ResponseEntity<?> changeBolsa(@RequestBody Bolsa bolsa){
+		Map<String, Object> response = new HashMap<>();
+		
+		Bolsa bolsa_response = null; 
+		Bolsa bolsa_guardada = null; 
+		
+		try {
+			bolsa_guardada = bolsaService.getById(bolsa.getId()); 
+			bolsa.setUsuario(bolsa_guardada.getUsuario());
+		}catch(Exception e) {
+			
+		}
+		
+		try {
+			bolsa_response = bolsaService.save(bolsa); 
+			
+		}catch(Exception e) {
+			response.put("error", "No se encontró el producto de la bolsa"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		if(bolsa_response==null) {
+			response.put("error", "No se encontró el producto"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("mensaje", "Se ha editado el producto en la bolsa"); 
+		response.put("detalle", bolsa_response); 
+		 
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
+	}
 	
 	
 

@@ -44,17 +44,17 @@ insert into tallas(talla) values ("XS");
 insert into tallas(talla) values ("M");
 
 
-insert into detalle_producto(color_id,producto_id,talla_id) values (1,1,1);
-insert into detalle_producto(color_id,producto_id,talla_id) values (2,1,2);
-insert into detalle_producto(color_id,producto_id,talla_id) values (3,1,1);
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,1,1,3);
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (2,1,2,4);
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (3,1,1,5);
 
-insert into detalle_producto(color_id,producto_id) values (1,2);
-insert into detalle_producto(color_id,producto_id) values (2,2);
-insert into detalle_producto(color_id,producto_id) values (3,2);
+insert into detalle_producto(color_id,producto_id,stock) values (1,2,3);
+insert into detalle_producto(color_id,producto_id,stock) values (2,2,4);
+insert into detalle_producto(color_id,producto_id,stock) values (3,2,5);
 
-insert into detalle_producto(color_id,producto_id) values (1,3);
-insert into detalle_producto(color_id,producto_id) values (2,3);
-insert into detalle_producto(color_id,producto_id) values (3,3); 
+insert into detalle_producto(color_id,producto_id,stock) values (1,3,1);
+insert into detalle_producto(color_id,producto_id,stock) values (2,3,2);
+insert into detalle_producto(color_id,producto_id,stock) values (3,3,3); 
 
 
   
