@@ -12,7 +12,32 @@ public interface IProductoDao extends CrudRepository<Producto,Long>{
 	public List<Producto> getByNombre(String nombre);
 	
 	
+	@Query("select p from Producto p join fetch p.categoria c where c.tipo=?1")
+	public List<Producto> getByCategoria(String categoria);
+	
+	@Query("select p from Producto p join fetch p.detalle d join fetch d.talla t where t.talla in ?1")
+	public List<Producto> getByTalla(List<String> talla);
+	
+	@Query("select p from Producto p join fetch p.detalle d join fetch d.color c where c.color in ?1")
+	public List<Producto> getByColor(List<String> color);
+	
+	
+	@Query("select distinct p from Producto p join fetch p.detalle d join fetch d.color c "
+			+ "join fetch d.talla t where c.color in ?1 and t.talla in ?2")
+	public List<Producto> getByColorAndTalla(List<String> talla,List<String> color);
+	
+	@Query("select distinct p from Producto p join fetch p.categoria a join fetch p.detalle d join fetch d.color c "
+			+ "join fetch d.talla t where c.color in ?1 and t.talla in ?2 and a.tipo=?3")
+	public List<Producto> getByColorAndTallaAndCategoria(List<String> talla,List<String> color,String categoria);
+	
+	@Query("select distinct p from Producto p join fetch p.categoria a join fetch p.detalle d join fetch d.color c "
+			+ "join fetch d.talla t where c.color in ?2 or t.talla in ?1 or a.tipo=?3")
+	public List<Producto> getByColorOrTallaOrCategoria(List<String> talla,List<String> color,String categoria);
+	
 	public Producto findByNombre(String nombre); 
 	
 	//@Query("select e from Ejercicio e join fetch e.musculo m where e.nombre like %?1% and m.id in ?2")
+	
+	
+	//select producto.nombre,colores.color,tallas.talla from detalle_producto inner join producto on producto_id=producto.id inner join colores on color_id=colores.id inner join tallas on talla_id=tallas.id;
 }

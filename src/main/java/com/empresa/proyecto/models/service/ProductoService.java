@@ -48,6 +48,42 @@ public class ProductoService implements IProductoService{
 		
 	}
 
+	@Override
+	public List<Producto> getByCategoria(String categoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Producto> getByTalla(List<String> talla) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Producto> getByColor(List<String> color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Producto> getByColorAndTalla(List<String> talla, List<String> color) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Producto> getByColorAndTallaAndCategoria(List<String> talla, List<String> color, String categoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Producto> getByColorOrTallaOrCategoria(List<String> talla, List<String> color, String categoria) {
+		// TODO Auto-generated method stub
+		return productoDao.getByColorOrTallaOrCategoria(talla, color, categoria);
+	}
+
 
 
 	

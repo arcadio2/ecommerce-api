@@ -1,8 +1,11 @@
 package com.empresa.proyecto.controllers;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.dao.IDetalleProductoDao;
 import com.empresa.proyecto.models.entity.Bolsa;
+import com.empresa.proyecto.models.entity.CategoriaProducto;
 import com.empresa.proyecto.models.entity.Comentarios;
 import com.empresa.proyecto.models.entity.ComentariosDto;
 import com.empresa.proyecto.models.entity.DetalleProducto;
@@ -31,12 +35,14 @@ import com.empresa.proyecto.models.entity.DetalleProductoDto;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Producto;
 import com.empresa.proyecto.models.service.IBolsaService;
+import com.empresa.proyecto.models.service.ICategoriaProductoService;
 import com.empresa.proyecto.models.service.IComentariosService;
 import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
 import com.empresa.proyecto.services.IValidationService;
+import com.empresa.proyecto.services.PlnService;
 
 @RestController
 @RequestMapping("/api/productos")
@@ -62,6 +68,10 @@ public class ProductosController {
 	@Autowired
 	IValidationService validationService; 
 	
+	@Autowired 
+	ICategoriaProductoService categoriaService; 
+	
+	
 	@GetMapping("")
 	//@ResponseStatus(HttpStatus.OK)
 	public List<Producto> getProductos(){
@@ -76,7 +86,41 @@ public class ProductosController {
 	public List<Producto> getProductosNombre(@PathVariable String nombre){
 		List<Producto> productos = productoService.findByNombre(nombre); 
 		
+
 		return productos; 
+	}  
+	
+	@GetMapping("/listado/{nombre}")
+	//@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> getSimilares(@PathVariable String nombre){
+		Map<String, Object> response = new HashMap<>();
+		
+		Producto encontrado = null; 
+		try {
+			encontrado = productoService.getByNombre(nombre); 
+			
+		}catch(Exception e) {
+			response.put("error", "No se encontró el producto"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		String categoria; 
+		List<String> talla,color = new ArrayList<>();
+		talla = encontrado.getDetalle().stream().map(d->d.getTalla().getTalla()).collect(Collectors.toList());
+		color = encontrado.getDetalle().stream().map(d->d.getColor().getColor()).collect(Collectors.toList());
+		
+		System.out.println("XCD"); 
+		System.out.println(talla);
+		System.out.println(color);
+		categoria = encontrado.getCategoria().getTipo(); 
+		System.out.println(categoria);
+		//talla = encontrado.getDetalle().
+		
+		List<Producto> productos = productoService.getByColorOrTallaOrCategoria(talla,color,categoria); 
+		
+		response.put("success", "Se han encontrado los productos"); 
+		response.put("productos", productos); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
 	}
 	
 	
@@ -345,5 +389,13 @@ public class ProductosController {
 	}
 	
 	
+	/*
+	 * CATEGORIA
+	 * */
+	@GetMapping("/categoria/{sexo}")
+	public List<CategoriaProducto> obetenerCategoriasBySexo(@PathVariable String sexo){
+		System.out.println("SEX "+sexo);
+		return categoriaService.finBySexo(sexo);  
+	}
 
 }

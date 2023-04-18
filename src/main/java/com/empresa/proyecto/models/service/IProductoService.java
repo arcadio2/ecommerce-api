@@ -17,6 +17,18 @@ public interface IProductoService {
 	public Producto save(Producto producto); 
 	
 	public void delete(Producto producto); 
+	
+	public List<Producto> getByCategoria(String categoria);
+	
+	public List<Producto> getByTalla(List<String> talla);
+	
+	public List<Producto> getByColor(List<String> color);
+	
+	public List<Producto> getByColorAndTalla(List<String> talla,List<String> color);
+	
+	public List<Producto> getByColorAndTallaAndCategoria(List<String> talla,List<String> color,String categoria);
+	
+	public List<Producto> getByColorOrTallaOrCategoria(List<String> talla,List<String> color,String categoria);
 
 	
 }
