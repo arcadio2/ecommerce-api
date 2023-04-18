@@ -42,7 +42,7 @@ import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
 import com.empresa.proyecto.services.IValidationService;
-import com.empresa.proyecto.services.PlnService;
+
 
 @RestController
 @RequestMapping("/api/productos")
