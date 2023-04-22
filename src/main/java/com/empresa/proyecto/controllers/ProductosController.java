@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -90,10 +91,14 @@ public class ProductosController {
 		return productos; 
 	}  
 	
-	@GetMapping("/listado/{nombre}")
+	@GetMapping("/listado")
 	//@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> getSimilares(@PathVariable String nombre){
+	public ResponseEntity<?> getSimilares(@RequestParam(required = false) String nombre,
+										@RequestParam(required = false) String categoria,
+										@RequestParam(required = false) String color,
+										@RequestParam(required = false) String talla){
 		Map<String, Object> response = new HashMap<>();
+		System.out.println("Nombre "+nombre);
 		
 		Producto encontrado = null; 
 		try {
@@ -103,19 +108,19 @@ public class ProductosController {
 			response.put("error", "No se encontró el producto"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
-		String categoria; 
-		List<String> talla,color = new ArrayList<>();
-		talla = encontrado.getDetalle().stream().map(d->d.getTalla().getTalla()).collect(Collectors.toList());
-		color = encontrado.getDetalle().stream().map(d->d.getColor().getColor()).collect(Collectors.toList());
+		String categoria_obtenida; 
+		List<String> tallas,colores = new ArrayList<>();
+		tallas = encontrado.getDetalle().stream().map(d->d.getTalla().getTalla()).collect(Collectors.toList());
+		colores = encontrado.getDetalle().stream().map(d->d.getColor().getColor()).collect(Collectors.toList());
 		
 		System.out.println("XCD"); 
-		System.out.println(talla);
-		System.out.println(color);
-		categoria = encontrado.getCategoria().getTipo(); 
-		System.out.println(categoria);
+		System.out.println(tallas);
+		System.out.println(colores);
+		categoria_obtenida = encontrado.getCategoria().getTipo(); 
+		System.out.println(categoria_obtenida);
 		//talla = encontrado.getDetalle().
 		
-		List<Producto> productos = productoService.getByColorOrTallaOrCategoria(talla,color,categoria); 
+		List<Producto> productos = productoService.getByColorOrTallaOrCategoria(tallas,colores,categoria_obtenida); 
 		
 		response.put("success", "Se han encontrado los productos"); 
 		response.put("productos", productos); 

@@ -23,8 +23,12 @@ public class CategoriaProductoService implements ICategoriaProductoService{
 
 	@Override
 	public List<CategoriaProducto> finBySexo(String sexo) {
-		// TODO Auto-generated method stub
-		return categoriaDao.getBySexo(sexo);
+		if(sexo.equalsIgnoreCase("hombre")) {
+			return categoriaDao.getByHombre();
+		}else {
+			return categoriaDao.getByMujer();
+		}
+		
 	}
 
 	@Override

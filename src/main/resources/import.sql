@@ -19,12 +19,12 @@ insert into sexo(sexo) values ("Mujer");
 
 	
 
-insert into categoria_producto(tipo) values ("Playeras"); 
-insert into categoria_producto(tipo) values ("Pantalones");
-insert into categoria_producto(tipo) values ("Camisas"); 
-insert into categoria_producto(tipo) values ("Blusas");
-insert into categoria_producto(tipo) values ("Vestidos");   
-
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Playeras",true,true); 
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Pantalones",true,true);
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Camisas",true,false); 
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Blusas",false,true);
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Vestidos",false,true);   
+/*
 #playeras
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(1,1); 
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(1,2); 
@@ -39,7 +39,7 @@ insert into categoria_sexo(categoria_producto_id,sexo_id) values(3,1);
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(4,2); 
 #vestidos
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(5,2); 
-
+*/
 
 
 insert into perfil(altura,edad,foto,talla_camisa,talla_pantalon,sexo_id,usuario_id) values (1.75,12,"",34,32,1,1);
@@ -47,14 +47,14 @@ insert into direccion(colonia,cp,delegacion,num_ext,num_int) values ("Benito Jua
 insert into perfil_direcciones(perfil_id,direccion_id) values (1,1);
 
 #producto
-insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","playera verde",10,1); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera verde",10,1,true); 
 
 
-insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","pantalon verde",10,2);
-insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","camisa verde",10,3);
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","pantalon verde",10,2,true);
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","camisa verde",10,3,true);
 
-insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","playera roja",10,1); 
-insert into producto(descripcion,nombre,precio,categoria_id) values ("no se","playera shine",10000,1); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera roja",10,1,false); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera shine",10000,1,true); 
 
 insert into colores(color) values ("rojo"); 
 insert into colores(color) values ("verde"); 

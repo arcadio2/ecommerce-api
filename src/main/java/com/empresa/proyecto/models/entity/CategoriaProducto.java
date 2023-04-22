@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -30,14 +31,18 @@ public class CategoriaProducto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonIgnore
+	/*@JsonIgnore
 	@ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name = "categoria_sexo", 
 	joinColumns = @JoinColumn(name="categoria_producto_id"),
 	uniqueConstraints =  {@UniqueConstraint(columnNames = {"categoria_producto_id","sexo_id"})} , 
 	inverseJoinColumns = @JoinColumn(name="sexo_id"))
-	private List<Sexo> sexo; 
+	private List<Sexo> sexo; */
 	 
+	
+	private boolean isHombre; 
+	private boolean isMujer; 
+	
 	
 	private String tipo;
 
@@ -62,14 +67,28 @@ public class CategoriaProducto implements Serializable{
 	}
 
 
-	public List<Sexo> getSexo() {
-		return sexo;
+
+
+	public boolean isHombre() {
+		return isHombre;
 	}
 
 
-	public void setSexo(List<Sexo> sexo) {
-		this.sexo = sexo;
+	public void setHombre(boolean isHombre) {
+		this.isHombre = isHombre;
 	}
+
+
+	public boolean isMujer() {  
+		return isMujer;
+	}
+
+
+	public void setMujer(boolean isMujer) {
+		this.isMujer = isMujer;
+	}
+	
+	
 
 
 	

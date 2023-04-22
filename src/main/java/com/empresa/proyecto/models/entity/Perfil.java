@@ -1,6 +1,7 @@
 package com.empresa.proyecto.models.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -44,6 +47,8 @@ public class Perfil implements Serializable{
 	@NotNull(message = "Ingrese un sexo") 
 	private Sexo sexo; 
 	
+	@Temporal(TemporalType.DATE)
+	private Date fecha_nacimiento;
 	
 	private String foto;
 	 
