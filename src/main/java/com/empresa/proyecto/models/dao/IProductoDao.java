@@ -34,6 +34,13 @@ public interface IProductoDao extends CrudRepository<Producto,Long>{
 			+ "join fetch d.talla t where c.color in ?2 or t.talla in ?1 or a.tipo=?3")
 	public List<Producto> getByColorOrTallaOrCategoria(List<String> talla,List<String> color,String categoria);
 	
+	@Query("select p from Producto p  where p.isHombre=?1")
+	public List<Producto> getBySexo(boolean isHombre);
+	
+	@Query("select p from Producto p join fetch p.categoria c where p.isHombre=?1  and c.tipo=?2")
+	public List<Producto> getBySexoAndCategoria (boolean isHombre,String categoria);
+	
+	
 	public Producto findByNombre(String nombre); 
 	
 	//@Query("select e from Ejercicio e join fetch e.musculo m where e.nombre like %?1% and m.id in ?2")

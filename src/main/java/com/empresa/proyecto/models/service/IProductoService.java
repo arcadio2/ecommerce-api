@@ -18,6 +18,9 @@ public interface IProductoService {
 	
 	public void delete(Producto producto); 
 	
+	public List<Producto> getBySexo(boolean isHombre);
+	public List<Producto> getBySexoAndCategoria(boolean isHombre,String categoria);
+	
 	public List<Producto> getByCategoria(String categoria);
 	
 	public List<Producto> getByTalla(List<String> talla);

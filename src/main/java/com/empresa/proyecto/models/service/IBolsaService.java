@@ -12,6 +12,8 @@ public interface IBolsaService {
 	
 	public Bolsa save(Bolsa bolsa); 
 	
+	public void delete(Bolsa bolsa); 
+	
 	
 	
 

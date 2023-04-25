@@ -24,6 +24,9 @@ insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Pantalones",tru
 insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Camisas",true,false); 
 insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Blusas",false,true);
 insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Vestidos",false,true);   
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Tenis",true,true);  
+#insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Relojes",true,false);
+insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Sueteres",true,true);    
 /*
 #playeras
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(1,1); 
@@ -47,13 +50,13 @@ insert into direccion(colonia,cp,delegacion,num_ext,num_int) values ("Benito Jua
 insert into perfil_direcciones(perfil_id,direccion_id) values (1,1);
 
 #producto
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera verde",10,1,true); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera verde",367,1,true); 
 
 
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","pantalon verde",10,2,true);
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","camisa verde",10,3,true);
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","pantalon verde",345,2,true);
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","camisa verde",287,3,true);
 
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera roja",10,1,false); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera roja",569,1,false); 
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera shine",10000,1,true); 
 
 insert into colores(color) values ("rojo"); 
@@ -87,7 +90,7 @@ insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,5,1,
 #bolsa 
  
 insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (3,3,1); 
+insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (3,8,1); 
 
 
 insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,2,2); 

@@ -95,37 +95,98 @@ public class ProductosController {
 	//@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> getSimilares(@RequestParam(required = false) String nombre,
 										@RequestParam(required = false) String categoria,
+										@RequestParam(required = false) String genero,
 										@RequestParam(required = false) String color,
 										@RequestParam(required = false) String talla){
 		Map<String, Object> response = new HashMap<>();
 		System.out.println("Nombre "+nombre);
+		System.out.println("Categoria "+categoria);
+		System.out.println("Genero "+genero);
 		
-		Producto encontrado = null; 
-		try {
-			encontrado = productoService.getByNombre(nombre); 
-			
-		}catch(Exception e) {
-			response.put("error", "No se encontró el producto"); 
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		if(nombre==null) {
+			System.out.println("Hola");
 		}
-		String categoria_obtenida; 
-		List<String> tallas,colores = new ArrayList<>();
-		tallas = encontrado.getDetalle().stream().map(d->d.getTalla().getTalla()).collect(Collectors.toList());
-		colores = encontrado.getDetalle().stream().map(d->d.getColor().getColor()).collect(Collectors.toList());
 		
-		System.out.println("XCD"); 
-		System.out.println(tallas);
-		System.out.println(colores);
-		categoria_obtenida = encontrado.getCategoria().getTipo(); 
-		System.out.println(categoria_obtenida);
-		//talla = encontrado.getDetalle().
-		
-		List<Producto> productos = productoService.getByColorOrTallaOrCategoria(tallas,colores,categoria_obtenida); 
-		
-		response.put("success", "Se han encontrado los productos"); 
-		response.put("productos", productos); 
-		
-		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+		if(!nombre.equals("null") && categoria.equals("null") && genero.equals("null")) {
+			Producto encontrado = null; 
+			try {
+				
+					encontrado = productoService.getByNombre(nombre); 
+				
+				/*if(nombre == null && categoria!=null && genero!=null) {
+					encontrado = productoService.getByCategoria(categoria); 
+				}
+				if(nombre== null && categoria==null && genero!=null) {
+					
+				}*/
+				
+				
+				
+			}catch(Exception e) {
+				response.put("error", "No se encontró el producto"); 
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+			}
+			String categoria_obtenida; 
+			List<String> tallas,colores = new ArrayList<>();
+			tallas = encontrado.getDetalle().stream().map(d->d.getTalla().getTalla()).collect(Collectors.toList());
+			colores = encontrado.getDetalle().stream().map(d->d.getColor().getColor()).collect(Collectors.toList());
+			
+			System.out.println("XCD"); 
+			System.out.println(tallas);
+			System.out.println(colores);
+			categoria_obtenida = encontrado.getCategoria().getTipo(); 
+			System.out.println(categoria_obtenida);
+			//talla = encontrado.getDetalle().
+			
+			List<Producto> productos = productoService.getByColorOrTallaOrCategoria(tallas,colores,categoria_obtenida); 
+			
+			response.put("success", "Se han encontrado los productos"); 
+			response.put("productos", productos); 
+			
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+		}else {
+			try {
+				if(nombre.equals("null") && !categoria.equals("null") && genero.equals("null")) {
+					System.out.println("Entra aca");
+					List<Producto> productos = productoService.getByCategoria(categoria); 
+					response.put("success", "Se han encontrado los productos"); 
+					response.put("productos", productos); 
+					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+				}
+				if(nombre.equals("null") && categoria.equals("null") && !genero.equals("null")) {
+					List<Producto> productos=null;
+					if(genero.equalsIgnoreCase("Hombre")) {
+						productos = productoService.getBySexo(true); 
+					}else {
+						productos = productoService.getBySexo(false); 
+					}
+					 
+					response.put("success", "Se han encontrado los productos"); 
+					response.put("productos", productos); 
+					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+				}
+				if(nombre.equals("null") && !categoria.equals("null") && !genero.equals("null")) {
+				
+					List<Producto> productos=null;
+					if(genero.equalsIgnoreCase("Hombre")) {
+						productos = productoService.getBySexoAndCategoria(true,categoria); 
+					}else {  
+						productos = productoService.getBySexoAndCategoria(false,categoria); 
+					} 
+					//List<Producto> productos = productoService.getByCategoria(categoria);
+
+					response.put("success", "Se han encontrado los productos"); 
+					response.put("productos", productos); 
+					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+				} 
+			}catch(Exception e) { 
+				response.put("error", "No se encontró el producto"); 
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+			}
+			
+		}
+		response.put("error", "Ha ocurrido un error"); 
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	
@@ -361,39 +422,7 @@ public class ProductosController {
 	}
 	
 	
-	@PutMapping("/bolsa")
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
-	public ResponseEntity<?> changeBolsa(@RequestBody Bolsa bolsa){
-		Map<String, Object> response = new HashMap<>();
-		
-		Bolsa bolsa_response = null; 
-		Bolsa bolsa_guardada = null; 
-		
-		try {
-			bolsa_guardada = bolsaService.getById(bolsa.getId()); 
-			bolsa.setUsuario(bolsa_guardada.getUsuario());
-		}catch(Exception e) {
-			
-		}
-		
-		try {
-			bolsa_response = bolsaService.save(bolsa); 
-			
-		}catch(Exception e) {
-			response.put("error", "No se encontró el producto de la bolsa"); 
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
-		}
-		if(bolsa_response==null) {
-			response.put("error", "No se encontró el producto"); 
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
-		}
-		response.put("mensaje", "Se ha editado el producto en la bolsa"); 
-		response.put("detalle", bolsa_response); 
-		 
-		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
-	}
-	
-	
+
 	/*
 	 * CATEGORIA
 	 * */

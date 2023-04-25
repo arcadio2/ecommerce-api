@@ -1,10 +1,10 @@
-package com.empresa.proyecto.models.entity;
+package com.empresa.proyecto.models.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresa.proyecto.models.dao.IBolsaDao;
-import com.empresa.proyecto.models.service.IBolsaService;
+import com.empresa.proyecto.models.entity.Bolsa;
 
 @Service
 public class BolsaService implements IBolsaService{
@@ -30,6 +30,12 @@ public class BolsaService implements IBolsaService{
 	@Override
 	public Bolsa save(Bolsa bolsa) {
 		return bolsaDao.save(bolsa);
+	}
+
+	@Override
+	public void delete(Bolsa bolsa) {
+		bolsaDao.delete(bolsa);
+		
 	}
 
 }
