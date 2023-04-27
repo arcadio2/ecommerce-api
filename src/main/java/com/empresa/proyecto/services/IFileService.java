@@ -11,6 +11,8 @@ public interface IFileService {
 
 	public Resource cargar(String nombre) throws MalformedURLException;
 	
+	public Resource cargar(String nombre_producto,String color,String nombre) throws MalformedURLException;
+	
 	public boolean deleteImage(Long id) ;
 	
 	public String uploadImage(MultipartFile archivo) throws IOException;

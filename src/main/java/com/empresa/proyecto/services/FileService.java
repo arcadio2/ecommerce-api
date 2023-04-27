@@ -75,6 +75,20 @@ public class FileService implements IFileService{
 			recurso = new UrlResource(rutaArchivo.toUri());			
 			System.out.println("Error, no se pudo cambiar la imagen "+nombre);
 		}
+		return recurso;
+	}
+
+	@Override 
+	public Resource cargar(String nombre_producto, String color, String nombre) throws MalformedURLException {
+		Path rutaArchivo = Paths.get("uploads/"+nombre_producto+"/"+color).resolve(nombre).toAbsolutePath();
+		Resource recurso = null; 
+		
+		recurso = new UrlResource(rutaArchivo.toUri());
+		if(!recurso.exists() && !recurso.isReadable()) {
+			rutaArchivo = Paths.get("uploads/images").resolve("no_photo.png").toAbsolutePath();
+			recurso = new UrlResource(rutaArchivo.toUri());			
+			System.out.println("Error, no se pudo cambiar la imagen "+nombre);
+		}
 		return recurso; 
 	}
 }
