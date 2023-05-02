@@ -84,7 +84,7 @@ public class ImagenesController {
 		 
 		 Path rutaArchivo = Paths.get("uploads/"+nombre_final+"/"+color);
 
-	   
+		 System.out.println(rutaArchivo);
 		 if (!Files.exists(rutaArchivo) || !Files.isDirectory(rutaArchivo)) {
 		        // Manejar el caso en que la ruta no existe o no es un directorio
 		        response.put("mensaje", "La ruta de archivos especificada no existe o no es un directorio");
@@ -101,7 +101,7 @@ public class ImagenesController {
                     .map(rutaArchivo::relativize)
                     .map(Path::toString)
                     .collect(Collectors.toList());
-
+		    
 		    // Agregar la lista de URLs de imágenes al mapa de respuesta
 		response.put("rutas", urls);
         response.put("mensaje", "Se han encontrado las rutas"); 

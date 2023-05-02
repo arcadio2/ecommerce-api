@@ -25,7 +25,7 @@ public class ResourceServerConfig  extends ResourceServerConfigurerAdapter{
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/hola", 
 				"/api/usuarios/uploads/img/**","/api/productos/**","/api/productos",
-				"/api/productos/producto/**",
+				"/api/productos/producto/**","/api/detalle/**",
 				"/api/productos/get/**","/api/imagenes/**",
 				"/api/clientes/uploads/img/**", "/images/**").permitAll()
 		.antMatchers(HttpMethod.POST,"/api/user/create").permitAll()

@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -39,21 +40,33 @@ public class Usuario implements Serializable{
 	private Long id;
 	
 	@Column(unique = true,length = 20) 
-	@NotNull 
+	@NotNull(message = "El nombbre de usuario es requerido")
 	@Length(min = 3,message = "El nombre de usuario debe tener 3 caracteres")
+	@Length(max = 15,message = "El nombre de usuario debe tener menos de 15 caracteres")
+
 	private String username; 
 	
 	@Column(length = 60)
-	@NotNull
+	@NotNull(message = "La contraseña es requerida")
+	@Length(min = 8,message = "La contraseña debe tener un mínimo de 8 caracteres")
 	private String password; 
 	private boolean enabled; 
 	
-	@NotNull 
-	@Length(min = 3,message = "El nombre debe tener 3 caracteres")
+	@NotNull(message = "El nombre es requerido")
+	//@Length(min = 3,message = "El nombre debe tener 3 caracteres")
+	@Length(max = 15,message = "El nombre debe tener menos de 20 caracteres")
+	@Pattern(regexp = "^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,3}(?:\\W+[-\\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$",
+	message = "El nombre debe tener solo letras y al menos 3 caracteres")
 	private String nombre; 	
-	@NotNull
+	
+	
+	@NotNull(message = "El apellido es requerido")
+	@Length(max = 15,message = "El nombre de usuario debe tener menos de 20 caracteres")
+	@Pattern(regexp = "^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,5}(?:\\W+[-\\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$",
+			message = "El apellido debe tener solo letras")
 	private String apellido;
 	
+	@NotNull(message = "El correo es requerido")
 	@Column(unique = true) 
 	@Email(message = "El email es inválido")
 	private String email;

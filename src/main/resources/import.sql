@@ -62,11 +62,12 @@ insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("
 #prueba
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("Camisa cómoda, útil para salir de fiesta","camisa clasica",10000,3,true); 
 
-insert into colores(color) values ("rojo"); 
-insert into colores(color) values ("verde"); 
-insert into colores(color) values ("azul"); 
-insert into colores(color) values ("blanco");
-insert into colores(color) values ("negro");  
+
+insert into colores(color,hexadecimal) values ("rojo","#d89f97"); 
+insert into colores(color,hexadecimal) values ("verde","#afbfab"); 
+insert into colores(color,hexadecimal) values ("azul","#91a5bb"); 
+insert into colores(color,hexadecimal) values ("blanco","#d2d3d4");
+insert into colores(color,hexadecimal) values ("negro","#0A0A0A");  
 
 
 insert into tallas(talla) values ("L");
@@ -96,6 +97,7 @@ insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,5,1,
 #prueba
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (4,6,5,10); 
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,5,8); 
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,1,8); 
 #bolsa 
  
 insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 

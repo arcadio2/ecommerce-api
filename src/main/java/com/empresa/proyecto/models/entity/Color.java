@@ -19,6 +19,8 @@ public class Color implements Serializable{
 	private Long Id; 
 	
 	private String color;
+	
+	private String hexadecimal; 
 
 	public Long getId() {
 		return Id;
@@ -34,8 +36,15 @@ public class Color implements Serializable{
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public String getHexadecimal() {
+		return hexadecimal;
 	} 
 
+	public void setHexadecimal(String hexadecimal) {
+		this.hexadecimal = hexadecimal;
+	} 
 	
 	
 }

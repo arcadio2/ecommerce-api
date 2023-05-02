@@ -110,19 +110,19 @@ public class UsuarioController {
 
 	}
 	@GetMapping("/user/profile/{username}")
-	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public ResponseEntity<?> perfil(@PathVariable String username){
 		Map<String, Object> response = new HashMap<>();
 		Perfil perfil = null;  
 		try {
 			perfil = usuarioService.getProfileByUsername(username);
 		}catch(Exception e) {
-			response.put("error", "No se encontró el usuario"); 
+			response.put("error", "Ha ocurrido un error"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
 		}
 		if(perfil == null) {
 			response.put("error", "No se ha encontrado el perfil"); 
-			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST); 	
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
 		response.put("mensaje", "Se ha encontrado el perfil"); 
 		response.put("perfil", perfil); 

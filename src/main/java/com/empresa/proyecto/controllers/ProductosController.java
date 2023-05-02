@@ -274,6 +274,8 @@ public class ProductosController {
 		
 	}
 	
+	/**DETALLE PRODUCTO**/
+	
 	
 	@Secured({"ROLE_USER"})
 	@PostMapping("/comentario/{username}/{id_producto}/{comentario_s}")

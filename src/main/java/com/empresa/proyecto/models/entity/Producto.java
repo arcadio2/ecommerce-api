@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne; 
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -67,6 +68,11 @@ public class Producto implements Serializable{
 	 *  on producto.id=producto_id where producto.nombre='playera verde';
 	 * 
 	 * */
+	
+	@PrePersist
+	public void iniciarFecha() {
+		this.fecha_subida = new Date(); 
+	}
 
 	public Long getId() {
 		return Id;
