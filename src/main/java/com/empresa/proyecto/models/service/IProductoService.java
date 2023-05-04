@@ -20,6 +20,7 @@ public interface IProductoService {
 	
 	public List<Producto> getBySexo(boolean isHombre);
 	public List<Producto> getBySexoAndCategoria(boolean isHombre,String categoria);
+	public Producto getProductoByIdDetalle(Long  id);
 	
 	public List<Producto> getByCategoria(String categoria);
 	

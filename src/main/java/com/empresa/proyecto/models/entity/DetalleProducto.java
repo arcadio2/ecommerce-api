@@ -98,6 +98,12 @@ public class DetalleProducto implements Serializable{
 		this.nombre_producto = nombre_producto;
 	}
 
+	@Override
+	public String toString() {
+		return "DetalleProducto [Id=" + Id + ", color=" + color + ", stock=" + stock + ", talla=" + talla
+				+ ", producto=" + producto + ", nombre_producto=" + nombre_producto + "]";
+	}
+
 
 	
 	

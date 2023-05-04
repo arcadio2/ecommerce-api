@@ -96,6 +96,12 @@ public class ProductoService implements IProductoService{
 		return productoDao.getBySexoAndCategoria(isHombre, categoria);
 	}
 
+	@Override
+	public Producto getProductoByIdDetalle(Long id) {
+		// TODO Auto-generated method stub
+		return productoDao.getProductoByIdDetalle(id);
+	}
+
 
 
 	

@@ -145,6 +145,13 @@ public class Producto implements Serializable{
 	public void setHombre(boolean isHombre) {
 		this.isHombre = isHombre;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [Id=" + Id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precio=" + precio
+				+ ", valoracion_total=" + valoracion_total + ", fecha_subida=" + fecha_subida + ", isHombre=" + isHombre
+				+ ", detalle=" + detalle + ", categoria=" + categoria + ", comentarios=" + comentarios + "]";
+	}
 	 
 	
 	

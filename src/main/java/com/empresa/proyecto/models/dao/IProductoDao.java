@@ -12,6 +12,9 @@ public interface IProductoDao extends CrudRepository<Producto,Long>{
 	public List<Producto> getByNombre(String nombre);
 	
 	
+	@Query("select p from Producto p join fetch p.detalle d where d.id=?1")
+	public Producto getProductoByIdDetalle(Long  id);
+	
 	@Query("select p from Producto p join fetch p.categoria c where c.tipo=?1")
 	public List<Producto> getByCategoria(String categoria);
 	

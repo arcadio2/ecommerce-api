@@ -179,13 +179,7 @@ public class Usuario implements Serializable{
 		this.compras = compras;
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
-				+ ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email + ", roles=" + roles
-				+ ", productos=" + bolsa + ", compras=" + compras + "]";
-	}
-	
+
 	
 
 

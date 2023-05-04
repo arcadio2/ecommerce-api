@@ -97,7 +97,7 @@ insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,5,1,
 #prueba
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (4,6,5,10); 
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,5,8); 
-insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,1,8); 
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,1,11); 
 #bolsa 
  
 insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 

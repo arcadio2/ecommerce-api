@@ -34,6 +34,11 @@ private static final long serialVersionUID = 1L;
 
 	public void setTalla(String talla) {
 		this.talla = talla;
+	}
+
+	@Override
+	public String toString() {
+		return "Talla [Id=" + Id + ", talla=" + talla + "]";
 	} 
 	
 	
