@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.proyecto.models.dao.IDetalleProductoDao;
 import com.empresa.proyecto.models.entity.Bolsa;
 import com.empresa.proyecto.models.entity.CategoriaProducto;
+import com.empresa.proyecto.models.entity.ComentarioValoracion;
 import com.empresa.proyecto.models.entity.Comentarios;
 import com.empresa.proyecto.models.entity.ComentariosDto;
 import com.empresa.proyecto.models.entity.DetalleProducto;
@@ -278,12 +280,16 @@ public class ProductosController {
 	
 	
 	@Secured({"ROLE_USER"})
-	@PostMapping("/comentario/{username}/{id_producto}/{comentario_s}")
-	public ResponseEntity<?> addComentario(@PathVariable String username,@PathVariable Long id_producto,@PathVariable String comentario_s){
+	@PostMapping("/comentario/{id_producto}")
+	public ResponseEntity<?> addComentario(@PathVariable Long id_producto,
+			@RequestBody  ComentarioValoracion comentario_s,
+			Authentication authentication){
 			
+		String username = authentication.getName();
 		Map<String, Object> response = new HashMap<>();
 		Comentarios comentario = new Comentarios(); 
-		comentario.setComentario(comentario_s); 
+		comentario.setComentario(comentario_s.getComentario());
+		comentario.setValoracion(comentario_s.getValoracion());
 		try {
 			comentario.setProducto(productoService.findById(id_producto)); 
 			comentario.setUsuario(usuarioService.findByUsername(username)); 
@@ -317,9 +323,6 @@ public class ProductosController {
 	@PostMapping("/comentario")
 	public ResponseEntity<?> addComentario2(@RequestBody @Valid ComentariosDto comentarioDto, BindingResult result){
 			
-		
-		
-		
 		
 		Map<String, Object> response = new HashMap<>();
 		
