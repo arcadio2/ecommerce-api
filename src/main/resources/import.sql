@@ -2,6 +2,7 @@
 
 INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('arcadio','$2a$10$v4RgozYXiSyb8ckZb41QDuUorAI8YzFeOqZkyUdL3hKE/e7Fh3PeC',1,'Arcadio','Lopez','arcadio@gmail.com');
 INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('admin','$2a$10$W143tnyFIwDOhaGhPF2p8eK225fmycCIos5cgGWQevh3EMDBXHUYG',1,'Jesus','Lopez','jesus@gmail.com');
+INSERT INTO usuarios (username,password,enabled,nombre,apellido,email) values ('cristobal','$2a$10$W143tnyFIwDOhaGhPF2p8eK225fmycCIos5cgGWQevh3EMDBXHUYG',1,'Crsitobal','De la Huerta','cristobalavalos09@gmail.com');
 
 
 INSERT INTO roles (nombre) values ('ROLE_USER');
@@ -12,7 +13,7 @@ insert into usuario_roles (usuario_id,role_id) values (1,1);
 #insert into usuario_roles (usuario_id,role_id) values (1,3); 
 insert into usuario_roles (usuario_id,role_id) values (2,2);
 insert into usuario_roles (usuario_id,role_id) values (2,1);  
-
+insert into usuario_roles (usuario_id,role_id) values (3,1);  
 
 insert into sexo(sexo) values ("Hombre"); 
 insert into sexo(sexo) values ("Mujer"); 	
