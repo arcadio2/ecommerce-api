@@ -60,9 +60,10 @@ public class EmailController {
 		Usuario usuario = null;
 		usuario = usuarioService.findByEmail("cristobalavalos09@gmail.com");
 		System.out.println(usuario.getNombre());
-		usuario.setPassword(passwordEncoder.encode(generarContrasena(10)));
+		String nuevaContrasena = generarContrasena(10);
+		usuario.setPassword(passwordEncoder.encode(nuevaContrasena));
 		Usuario nuevoUsuario = usuarioService.save(usuario);
-		//emailService.send("shinesadecv170@gmail.com", "cristobalavalos09@gmail.com", "pruebasSpringBoot", "Hola mundito desde spring email(>w<)");
+		emailService.send("shinesadecv170@gmail.com", "cristobalavalos09@gmail.com", "pruebasSpringBoot", "Tu nueva contraseña es: "+nuevaContrasena);
 	}
 	
 	/*
