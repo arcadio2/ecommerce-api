@@ -190,7 +190,7 @@ public class ProductosController {
 	}
 	
 	
-	
+	 
 	@GetMapping("/producto/{producto}")
 	public ResponseEntity<?> getProducto(@PathVariable String producto){
 		Map<String, Object> response = new HashMap<>();
@@ -433,5 +433,49 @@ public class ProductosController {
 		System.out.println("SEX "+sexo);
 		return categoriaService.finBySexo(sexo);  
 	}
+	
+	/*
+	@Secured({"permitAll()"})
+	@GetMapping("/get/detalle/{detalle_id}")
+	public ResponseEntity<?> getComentariosByU(@PathVariable Long producto_id){
+		Map<String, Object> response = new HashMap<>();
+		Producto producto = null;  
+		try {
+			comentario = comentarioService.getByUsernameAndPerfil(username,producto_id);
+		}catch(Exception e) {
+			response.put("error", "No se encontró el comentario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		if(comentario == null) {
+			response.put("error", "No se ha encontrado el comentario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("mensaje", "Se ha encontrado el comentario"); 
+		response.put("valoracion", comentario); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
+	}*/
 
+	/*
+	@GetMapping("/get/detalle/{detalle_id}")
+	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	public ResponseEntity<?> getComentariosByU(@PathVariable Long producto_id){
+		Map<String, Object> response = new HashMap<>();
+		Producto producto = null;  
+		try {
+			comentario = comentarioService.getByUsernameAndPerfil(username,producto_id);
+		}catch(Exception e) {
+			response.put("error", "No se encontró el comentario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		if(comentario == null) {
+			response.put("error", "No se ha encontrado el comentario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("mensaje", "Se ha encontrado el comentario"); 
+		response.put("valoracion", comentario); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
+	}*/
+	
 }

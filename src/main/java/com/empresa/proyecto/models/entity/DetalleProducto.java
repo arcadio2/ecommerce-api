@@ -44,8 +44,8 @@ public class DetalleProducto implements Serializable{
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Producto producto;
-	
+	private Producto producto;  
+ 
 	@Transient
 	private String nombre_producto; 
 	

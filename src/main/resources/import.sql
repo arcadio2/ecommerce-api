@@ -100,11 +100,11 @@ insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,5,
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (5,6,1,11); 
 #bolsa 
  
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (3,8,1); 
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,5,1); 
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,13,1); 
-insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,14,1); 
+#insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,1,1); 
+#insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (3,8,1); 
+#insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,5,1); 
+#insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,13,1); 
+#insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (1,14,1); 
 
 insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,2,2); 
 
