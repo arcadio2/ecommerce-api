@@ -23,6 +23,9 @@ public class EmailController {
 	@Autowired
 	IEmailService emailService;
 	
+	@Autowired
+	IUsuarioService usuario;
+	
 	@GetMapping("/mail")
 	public void enviarMail() {
 		//System.out.println("Esto se esta ejecutando");
