@@ -16,6 +16,11 @@ import com.empresa.proyecto.services.IEmailService;
 
 
 import java.security.SecureRandom;
+import java.util.Map;
+
+import javax.mail.MessagingException;
+
+import java.util.HashMap;
 
 
 @RestController
@@ -55,15 +60,20 @@ public class EmailController {
 	}
 	
 	@GetMapping("/mail")
-	public void enviarMail() {
+	public void enviarMail() throws MessagingException {
 		//System.out.println("Esto se esta ejecutando");
 		Usuario usuario = null;
 		usuario = usuarioService.findByEmail("cristobalavalos09@gmail.com");
 		System.out.println(usuario.getNombre());
 		String nuevaContrasena = generarContrasena(10);
+		
+		Map<String, Object> datos = new HashMap<>();
+		datos.put("usuario", usuario.getNombre());
+		datos.put("contrasena", nuevaContrasena);
+		
 		usuario.setPassword(passwordEncoder.encode(nuevaContrasena));
 		Usuario nuevoUsuario = usuarioService.save(usuario);
-		emailService.send("shinesadecv170@gmail.com", "cristobalavalos09@gmail.com", "pruebasSpringBoot", "Tu nueva contraseña es: "+nuevaContrasena);
+		emailService.sendWithAttach("shinesadecv170@gmail.com", "cristobalavalos09@gmail.com", "pruebasSpringBoot", "Tu nueva contraseña es: "+nuevaContrasena, datos);
 	}
 	
 	/*
