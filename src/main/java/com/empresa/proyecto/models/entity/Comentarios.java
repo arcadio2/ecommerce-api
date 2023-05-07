@@ -39,8 +39,10 @@ public class Comentarios implements Serializable{
 	 
 	 
 	private String comentario;
-	
+	  
 	private Double valoracion; 
+	
+	private String titulo; 
 	
 	
  
@@ -111,6 +113,16 @@ public class Comentarios implements Serializable{
 			this.username = this.getUsuario().getUsername();
 		}
 		
+	}
+
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 

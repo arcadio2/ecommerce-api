@@ -22,6 +22,8 @@ public class ComentariosDto implements Serializable{
 	@NotNull
 	private String comentario;
 	
+	private String titulo; 
+	
 	
 	private Double valoracion;
 
@@ -63,6 +65,16 @@ public class ComentariosDto implements Serializable{
 
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
+	}
+	
+	
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	@Override

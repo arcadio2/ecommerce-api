@@ -112,10 +112,10 @@ insert into bolsa(cantidad,detalle_producto_id,usuario_id) values (2,2,2);
 
 
 
-insert into comentarios(producto_id,usuario_id,comentario) values (1,1,"Muy buen producto");
-insert into comentarios(producto_id,usuario_id,comentario) values (1,2,"Muy mal producto");
+insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) values (1,1,5,"Muy buen producto, es el mejor del mercado, debido a que tiene una buena relación de calidad y precio","Mejor relacion calidad precio");
+insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) values (1,2,2,"Muy mal producto, es el peor del mercado, debido a que tiene una mala relación de calidad y precio","Peor relación calidad precio");
 
-insert into comentarios(producto_id,usuario_id,comentario) values (2,2,"Muy buen producto");
+insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) values (2,2,4,"Muy buen producto","XD");
 
 
 #insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,1,5); 

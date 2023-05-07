@@ -76,7 +76,7 @@ public class EmailController {
 		emailService.sendWithAttach("shinesadecv170@gmail.com", "cristobalavalos09@gmail.com", "pruebasSpringBoot", "Tu nueva contraseña es: "+nuevaContrasena, datos);
 	}
 	
-	/*
+	/* 
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestBody EmailRequest emailRequest) {
         emailService.sendSimpleMessage(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getText());
