@@ -2,6 +2,8 @@ package com.empresa.proyecto.models.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Query;
+
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Role;
 import com.empresa.proyecto.models.entity.Sexo;
@@ -10,6 +12,7 @@ import com.empresa.proyecto.models.entity.Usuario;
 
 public interface IUsuarioService {
 	public Usuario findByUsername(String username);
+	public Usuario findByEmail(String email);
 	public Usuario save(Usuario usuario); 
 	
 	public List<Usuario> getAllUsers();
@@ -37,4 +40,5 @@ public interface IUsuarioService {
 	public List<Perfil> getAllProfiles(); 
 	
 	public List<Perfil> getPerfilByRole(String nombre); 
+
 }

@@ -184,4 +184,11 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 		
 		return usuarioDao.findUserByRole(role);
 	}
+
+
+	@Override
+	public Usuario findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return usuarioDao.finByEmail(email);
+	}
 }
