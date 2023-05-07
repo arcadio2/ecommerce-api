@@ -7,6 +7,8 @@ public class ComentarioValoracion implements Serializable{
 	private String comentario; 
 	
 	private Double valoracion;
+	
+	private String titulo; 
 
 	public String getComentario() {
 		return comentario;
@@ -22,6 +24,16 @@ public class ComentarioValoracion implements Serializable{
 
 	public void setValoracion(Double valoracion) {
 		this.valoracion = valoracion;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	} 
 
+	
+	 
 }

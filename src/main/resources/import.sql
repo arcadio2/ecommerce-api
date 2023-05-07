@@ -51,10 +51,10 @@ insert into direccion(colonia,cp,delegacion,num_ext,num_int) values ("Benito Jua
 insert into perfil_direcciones(perfil_id,direccion_id) values (1,1);
 
 #producto
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera moderna",367,1,true); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,valoracion_total) values ("no se","playera moderna",367,1,true,3.5); 
 
 
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","pantalon moderno",345,2,true);
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,valoracion_total) values ("no se","pantalon moderno",345,2,true,4);
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","camisa shine",287,3,true);
 
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre) values ("no se","playera clash",569,1,false); 

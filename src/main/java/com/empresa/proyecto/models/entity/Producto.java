@@ -43,7 +43,7 @@ public class Producto implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date fecha_subida;
-	
+	 
 	private boolean isHombre; 
 	
 	
