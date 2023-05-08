@@ -1,5 +1,7 @@
 package com.empresa.proyecto.models.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class BolsaService implements IBolsaService{
 	}
 
 	@Override
-	public Bolsa getByUsername(String username) {
+	public List<Bolsa> getByUsername(String username) {
 		return bolsaDao.getByUsername(username);
 	}
 

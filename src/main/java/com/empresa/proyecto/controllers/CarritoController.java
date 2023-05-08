@@ -1,6 +1,7 @@
 package com.empresa.proyecto.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -181,6 +183,33 @@ public class CarritoController {
 		
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 	}
+	
+	@GetMapping("/get/bolsa")
+	@Secured({"ROLE_USER"})
+	@ResponseStatus(code = HttpStatus.OK)
+	public ResponseEntity<?> getBolsaByUsuario(Authentication auth){
+		Map<String, Object> response = new HashMap<>();
+		String username = auth.getName();
+		List<Bolsa> bolsa = null; 
+		try {
+			bolsa = bolsaService.getByUsername(username); 
+		}catch(Exception e) {
+			response.put("error", "No se encontró la bolsa"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		} 
+		if(bolsa==null || bolsa.size()==0) {
+			response.put("error", "No se encontró el usuario"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		System.out.println(bolsa);
+
+		response.put("mensaje", "Se ha encontrado la bolsa"); 
+
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+
+	}
+	
 	
 	
 	

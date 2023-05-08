@@ -23,6 +23,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -431,10 +432,11 @@ public class UsuarioController {
 		return usuarioService.getPerfilByRole(nombre);
 	}
 	
-	@GetMapping("/users/{username}")
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
-	public ResponseEntity<?> getUsuarioByUsernme(@PathVariable String username){
+	@GetMapping("/get/user")
+	@Secured({"ROLE_USER"})
+	public ResponseEntity<?> getUsuarioByUsernme(Authentication auth){
 		Map<String, Object> response = new HashMap<>();
+		String username = auth.getName();
 		
 		Usuario usuario_response = null; 
 		try {
@@ -447,6 +449,7 @@ public class UsuarioController {
 			response.put("error", "No se encontró el usuario"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
+	
 		response.put("mensaje", "Se ha encontrado el usuario"); 
 		response.put("usuario", usuario_response); 
 		

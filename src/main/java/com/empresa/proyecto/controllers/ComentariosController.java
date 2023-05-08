@@ -106,7 +106,7 @@ public class ComentariosController {
 			comentario.setProducto(comentarioDto.getProducto()); 
 			comentario.setUsuario(comentarioDto.getUsuario()); 
 			comentario.setValoracion(comentarioDto.getValoracion());
-			
+			comentario.setTitulo(comentarioDto.getTitulo());
 			Comentarios existente = null; 
 			try {
 				

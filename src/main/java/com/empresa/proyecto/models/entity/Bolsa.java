@@ -33,7 +33,6 @@ private static final long serialVersionUID = 1L;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
-	
 	private Usuario usuario ; 
 	
 	 
@@ -84,11 +83,6 @@ private static final long serialVersionUID = 1L;
 	}
 
 
-	@Override
-	public String toString() {
-		return "Bolsa [Id=" + Id + ", detalle_producto=" + detalle_producto + ", usuario=" + usuario + ", cantidad="
-				+ cantidad + "]";
-	}
 	
 	
 
