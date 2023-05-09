@@ -93,8 +93,8 @@ public class CarritoController {
 		Bolsa bolsa_response = null; 
 		Bolsa bolsa_guardada = null; 
 		String username = authentication.getName();
-		System.out.println(username);
-		Usuario usuario=null; 
+		System.out.println("BOLSA-" +username); 
+		Usuario usuario=null;  
 		
 		//obtener producto 
 		Producto producto = null; 
@@ -137,6 +137,7 @@ public class CarritoController {
 			bolsa_response = bolsaService.save(bolsa); 
 			
 		}catch(Exception e) {
+			System.out.println(e.getMessage());
 			response.put("error", "No se encontró el producto de la bolsa"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}

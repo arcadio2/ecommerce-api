@@ -15,15 +15,27 @@ public class Direccion implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
 	
-	private Integer cp; 
 	
-	private String colonia; 
 	
-	private String delegacion; 
+	private String municipio; 
 	
 	private Integer num_int; 
 	
 	private Integer num_ext; 
+	
+	
+	private String coloniaID;
+	private Integer cp; 
+	
+	private String colonia; 
+    private String estadoID;
+    private String municipioID;
+
+    private String calle; 
+    private String numero_contacto; 
+    
+    private String info_adicional; 
+	
 	
 	
 	

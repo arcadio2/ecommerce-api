@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "bolsa",
-uniqueConstraints = {@UniqueConstraint(columnNames = {"detalle_producto_id", "usuario_id"})}
+	uniqueConstraints  = { @UniqueConstraint(columnNames = {"usuario_id", "detalle_producto_id"} ) }
 )
 public class Bolsa {
 	

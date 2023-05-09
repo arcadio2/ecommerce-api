@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -63,6 +67,9 @@ public class UsuarioController {
 	
 	@Autowired
 	IValidationService validationService; 
+	
+	@Autowired
+	private TokenStore tokenStore;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -132,30 +139,53 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/user/profile")
-	@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<?> createPerfil(@RequestBody @Valid Perfil perfil,  BindingResult result){
+	public ResponseEntity<?> createPerfil(@RequestBody @Valid Perfil perfil,
+			BindingResult result,Authentication authentication){
+		
 		Map<String, Object> response = new HashMap<>();
-
+		String username = authentication.getName(); 	
+		
+		/*
+		Usuario usuario = null; 
+		try {
+			usuario =  usuarioService.findByUsername(username); 
+		}catch(Exception e) {
+			response.put("error", "No estás autenticado");
+			response.put("mensaje", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.FORBIDDEN);
+			
+		}*/
+	
+		
+		System.out.println("USUAERIO OBTENIDO: " +perfil.getSexo().getId());
 		if(result.hasErrors()) {
 			response = validationService.responseErrors(result);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 		}
+		//BindingResult result_user; 
+		//result_user.addError(perfil.getUsuario()); 
+		
 		
 		System.out.println("ENTRA");
 		Perfil perfilCreado = null; 
 	   
 		/*Obtenemos el usuario*/
 		Usuario usuario = usuarioService.findByUsername(perfil.getUsuario().getUsername()); 
+		usuario.setNombre(perfil.getUsuario().getNombre()); 
+		usuario.setApellido(perfil.getUsuario().getApellido()); 
 		perfil.setUsuario(usuario);
 		perfil.setSexo(usuarioService.getSexoById(perfil.getSexo().getId())); 
 		//perfil.setFoto("no_user.png");
-		
+		//Usuario usuario_editado =  null; 
 		try {
+			//ususario_editado = usuarioService.save(usuario_editado); 
 			perfilCreado = usuarioService.saveProfile(perfil); 
 			 
 		}catch(Exception e) {
-			response.put("error", "No se ha podido crear el perfil"); 
+			response.put("error", "No se ha podido crear el perfil");
+			
 			System.out.println(e.getMessage());
 			System.out.println(e.getLocalizedMessage());
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.BAD_REQUEST); 	
@@ -175,6 +205,7 @@ public class UsuarioController {
 	public ResponseEntity<?> editPerfil(@RequestBody Perfil perfil){
 		Map<String, Object> response = new HashMap<>();
 
+		
 		Perfil perfilActual = null; 
 		try {
 			String username = perfil.getUsuario().getUsername();
@@ -437,6 +468,7 @@ public class UsuarioController {
 	public ResponseEntity<?> getUsuarioByUsernme(Authentication auth){
 		Map<String, Object> response = new HashMap<>();
 		String username = auth.getName();
+		System.out.println("USuario "+username);
 		
 		Usuario usuario_response = null; 
 		try {
@@ -457,7 +489,18 @@ public class UsuarioController {
 	}
 	
 	
-
+	@PostMapping("/logout")
+	public void logout(HttpServletRequest request) throws ServletException {
+	    String authHeader = request.getHeader("Authorization");
+	    System.out.println(authHeader);
+	    if (authHeader != null) {
+	        String tokenValue = authHeader.replace("Bearer", "").trim();
+	        OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
+	        tokenStore.removeAccessToken(accessToken);
+	    }
+	}
+	
+ 
 	
 	
 	

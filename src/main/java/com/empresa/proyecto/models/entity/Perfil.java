@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -40,6 +41,7 @@ public class Perfil implements Serializable{
 	private static final long serialVersionUID = 1L;
 	  
 	@OneToOne 
+	@Valid
 	@NotNull(message = "Requieres de un usuario para guardar tu perfil")
 	private Usuario usuario; 
 	 
@@ -53,7 +55,7 @@ public class Perfil implements Serializable{
 	
 	private String foto;
 	 
-	@Min(value = 14,message = "No puedes ingresar una edad tan baja")
+	@Min(value = 10,message = "No puedes ingresar una edad tan baja")
 	@Max(value = 90, message = "No puede ingresar una edad tan alta")
 	private Integer edad; 
 	
