@@ -17,7 +17,6 @@ public class CategoriaProductoService implements ICategoriaProductoService{
 	
 	@Override
 	public List<CategoriaProducto> findAll() {
-		// TODO Auto-generated method stub
 		return (List<CategoriaProducto>) categoriaDao.findAll();
 	}
 
@@ -37,7 +36,7 @@ public class CategoriaProductoService implements ICategoriaProductoService{
 		return categoriaDao.save(categoria);
 	}
 
-	@Override
+	@Override 
 	public void delete(CategoriaProducto categoria) {
 		categoriaDao.delete(null);
 		

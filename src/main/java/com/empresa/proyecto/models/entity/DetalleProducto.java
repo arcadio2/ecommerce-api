@@ -88,21 +88,20 @@ public class DetalleProducto implements Serializable{
 
 	public void setProducto(Producto producto) {
 		this.producto = producto;
-	}
+	} 
 
 	public String getNombre_producto() {
-		return this.producto.getNombre();
+		if(this.producto!=null) {
+			return this.producto.getNombre();
+		}
+		return this.nombre_producto; 
 	}
 
 	public void setNombre_producto(String nombre_producto) {
 		this.nombre_producto = nombre_producto;
 	}
 
-	@Override
-	public String toString() {
-		return "DetalleProducto [Id=" + Id + ", color=" + color + ", stock=" + stock + ", talla=" + talla
-				+ ", producto=" + producto + ", nombre_producto=" + nombre_producto + "]";
-	}
+ 
 
 
 	

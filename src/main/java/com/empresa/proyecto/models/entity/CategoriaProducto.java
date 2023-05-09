@@ -43,6 +43,8 @@ public class CategoriaProducto implements Serializable{
 	private boolean isHombre; 
 	private boolean isMujer; 
 	
+	private boolean tronco_superior; 
+	
 	
 	private String tipo;
 
@@ -50,7 +52,7 @@ public class CategoriaProducto implements Serializable{
 	public Long getId() {
 		return id;
 	}
-
+ 
 
 	public void setId(Long id) {
 		this.id = id;
@@ -81,11 +83,21 @@ public class CategoriaProducto implements Serializable{
 
 	public boolean isMujer() {  
 		return isMujer;
-	}
+	} 
 
 
 	public void setMujer(boolean isMujer) {
 		this.isMujer = isMujer;
+	}
+
+
+	public boolean isTronco_superior() {
+		return tronco_superior;
+	}
+
+
+	public void setTronco_superior(boolean tronco_superior) {
+		this.tronco_superior = tronco_superior;
 	}
 	
 	

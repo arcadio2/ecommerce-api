@@ -226,12 +226,41 @@ public class ProductosController {
 	public ResponseEntity<?> createProducto(@RequestBody @Valid Producto producto, BindingResult result){
 	
 		Map<String, Object> response = new HashMap<>();
-		
+		producto.setId(null);
 		if(result.hasErrors()) {
 
 			response = validationService.responseErrors(result);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 		}  
+		System.out.println(producto.getNombre() + "XDJKCSBCASJCJSA");
+		
+		try {
+			Producto prodcuto_saved = productoService.save(producto); 
+			response.put("mensaje", "El producto ha sido agregado con éxito");
+			response.put("producto",prodcuto_saved); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+			
+		}catch(Exception e) {
+			response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+	
+	}
+	
+	
+	@PostMapping("/edit")
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@ResponseStatus(HttpStatus.CREATED)//201
+	public ResponseEntity<?> dediProducto(@RequestBody @Valid Producto producto, BindingResult result){
+	
+		Map<String, Object> response = new HashMap<>();
+		producto.setId(null);
+		if(result.hasErrors()) {
+
+			response = validationService.responseErrors(result);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}  
+		System.out.println(producto.getNombre() + "XDJKCSBCASJCJSA");
 		
 		try {
 			Producto prodcuto_saved = productoService.save(producto); 
@@ -250,21 +279,25 @@ public class ProductosController {
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public ResponseEntity<?> deleteProducto(@PathVariable String producto){
 		Map<String, Object> response = new HashMap<>();
+		
+		System.out.println(producto+"XDDD");
 		Producto producto_obtenido = null;
 		
 		try {
-			productoService.getByNombre(producto); 
+			producto_obtenido = productoService.getByNombre(producto); 
 			
 		}catch(Exception e) {
-			response.put("mensaje", "No se ha encontrado el producto a eliminar");
+			response.put("mensaje", "Ha ocurrido un error al econtrar el producto");
 			response.put("error", e.getMessage()); 
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 		}
+		System.out.println(producto_obtenido);
 		
 		try {
 			productoService.delete(producto_obtenido); 
 			
 		}catch(Exception e) {
+			System.out.println(e.getMessage());
 			response.put("mensaje", "No se ha podido borrar el producto");
 			response.put("error", e.getMessage()); 
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
@@ -292,7 +325,7 @@ public class ProductosController {
 			detalle_response = detalleService.save(detalle); 
 			
 		}catch(Exception e) {
-			response.put("error", "No se encontró el producto"); 
+			response.put("error", "No se encontró el producto");  
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
 		if(detalle_response==null) {

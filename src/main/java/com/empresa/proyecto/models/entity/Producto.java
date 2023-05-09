@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -30,7 +30,7 @@ public class Producto implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
-	
+	@Column(unique = true) 
 	private String nombre; 
 	 
 	private String descripcion; 
@@ -38,7 +38,7 @@ public class Producto implements Serializable{
 	private Double precio; 
 	 
 	private Double valoracion_total; 
-	
+	 
 
 	
 	@Temporal(TemporalType.DATE)
@@ -48,7 +48,7 @@ public class Producto implements Serializable{
 	
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE) 
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)  
 	@JoinColumn(name = "producto_id")
 	private List<DetalleProducto> detalle;  
 	 

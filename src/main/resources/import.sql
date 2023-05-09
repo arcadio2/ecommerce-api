@@ -20,14 +20,15 @@ insert into sexo(sexo) values ("Mujer");
 
 	
 
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Playeras",true,true); 
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Pantalones",true,true);
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Camisas",true,false); 
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Blusas",false,true);
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Vestidos",false,true);   
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Tenis",true,true);  
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Playeras",true,true,true); 
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Pantalones",true,true,false);
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Shorts",true,false,false);
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Camisas",true,false,true); 
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Blusas",false,true,true);
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Vestidos",false,true,true); 
+#insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Tenis",true,true);  
 #insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Relojes",true,false);
-insert into categoria_producto(tipo,is_hombre,is_mujer) values ("Sueteres",true,true);    
+insert into categoria_producto(tipo,is_hombre,is_mujer,tronco_superior) values ("Sueteres",true,true,true);    
 /*
 #playeras
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(1,1); 
@@ -71,12 +72,35 @@ insert into colores(color,hexadecimal) values ("blanco","#d2d3d4");
 insert into colores(color,hexadecimal) values ("negro","#0A0A0A");  
 
 
-insert into tallas(talla) values ("L");
-insert into tallas(talla) values ("XL");
-insert into tallas(talla) values ("S");
-insert into tallas(talla) values ("XS");
-insert into tallas(talla) values ("M");
+insert into categoria_tallas(categoria) values("tronco superior");
+insert into categoria_tallas(categoria) values("tronco inferior");
+insert into categoria_tallas(categoria) values("pies");
 
+insert into tallas(talla,tronco_superior) values ("L",1);
+insert into tallas(talla,tronco_superior) values ("XL",1);
+insert into tallas(talla,tronco_superior) values ("S",1);
+insert into tallas(talla,tronco_superior) values ("XS",1);
+insert into tallas(talla,tronco_superior) values ("M",1);
+
+insert into tallas(talla,tronco_superior) values ("28",0);
+insert into tallas(talla,tronco_superior) values ("29",0);
+insert into tallas(talla,tronco_superior) values ("30",0);
+insert into tallas(talla,tronco_superior) values ("31",0);
+insert into tallas(talla,tronco_superior) values ("32",0);
+insert into tallas(talla,tronco_superior) values ("33",0);
+insert into tallas(talla,tronco_superior) values ("34",0);
+insert into tallas(talla,tronco_superior) values ("35",0);
+insert into tallas(talla,tronco_superior) values ("36",0);
+insert into tallas(talla,tronco_superior) values ("37",0);
+insert into tallas(talla,tronco_superior) values ("38",0);
+insert into tallas(talla,tronco_superior) values ("39",0);
+insert into tallas(talla,tronco_superior) values ("40",0);
+
+#insert into tallas(talla,categoria_id) values ("39",3);
+#insert into tallas(talla,categoria_id) values ("39",3);
+#insert into tallas(talla,categoria_id) values ("39",3);
+#insert into tallas(talla,categoria_id) values ("39",3);
+#insert into tallas(talla,categoria_id) values ("39",3);
 
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,1,1,3);
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (2,1,2,4);
