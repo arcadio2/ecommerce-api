@@ -12,7 +12,7 @@ import com.empresa.proyecto.models.entity.CategoriaProducto;
 public class CategoriaProductoService implements ICategoriaProductoService{
 
 	
-	@Autowired
+	@Autowired 
 	private ICategoriaProductoDao categoriaDao; 
 	
 	@Override
@@ -35,7 +35,7 @@ public class CategoriaProductoService implements ICategoriaProductoService{
 		// TODO Auto-generated method stub
 		return categoriaDao.save(categoria);
 	}
-
+  
 	@Override 
 	public void delete(CategoriaProducto categoria) {
 		categoriaDao.delete(null);

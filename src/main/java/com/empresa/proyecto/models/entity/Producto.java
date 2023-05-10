@@ -18,6 +18,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -31,12 +32,17 @@ public class Producto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
 	@Column(unique = true) 
+	@NotNull(message = "Debes ingresar un nombre")
 	private String nombre; 
 	 
+	
+	@NotNull(message = "Debes ingresar una descripción")
 	private String descripcion; 
 	
+	@NotNull(message = "Debes ingresar un precio")
 	private Double precio; 
 	 
+	
 	private Double valoracion_total; 
 	 
 

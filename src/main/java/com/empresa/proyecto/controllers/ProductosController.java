@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -247,23 +251,33 @@ public class ProductosController {
 	
 	}
 	
-	
-	@PostMapping("/edit")
+
+	@PutMapping("/edit")
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@ResponseStatus(HttpStatus.CREATED)//201
-	public ResponseEntity<?> dediProducto(@RequestBody @Valid Producto producto, BindingResult result){
+	public ResponseEntity<?> editProducto(@RequestBody @Valid Producto producto, BindingResult result){
 	
 		Map<String, Object> response = new HashMap<>();
-		producto.setId(null);
 		if(result.hasErrors()) {
 
 			response = validationService.responseErrors(result);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 		}  
-		System.out.println(producto.getNombre() + "XDJKCSBCASJCJSA");
+	
+		Producto producto_encontrado = null;  
+		try {
+			producto_encontrado = productoService.findById(producto.getId()); 
+			producto_encontrado.setPrecio(producto.getPrecio()); 
+			producto_encontrado.setDescripcion(producto.getDescripcion()); 
+			producto_encontrado.setNombre(producto.getNombre()); 
+		}catch (Exception e){ 
+			response.put("Error", "Ha ocurrido un error al editar \n"+e.getCause());
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+			
 		
 		try {
-			Producto prodcuto_saved = productoService.save(producto); 
+			Producto prodcuto_saved = productoService.save(producto_encontrado); 
 			response.put("mensaje", "El producto ha sido agregado con éxito");
 			response.put("producto",prodcuto_saved); 
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);

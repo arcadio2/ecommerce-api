@@ -3,13 +3,20 @@ package com.empresa.proyecto.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.entity.DetalleProducto;
@@ -85,6 +92,51 @@ public class DetalleProductoController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
 		
 	}
+	
+	
+	/*Método para aumentar el stock*/
+	@PutMapping("/edit")
+	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@ResponseStatus(HttpStatus.CREATED)//201
+	public ResponseEntity<?> editProducto(@RequestBody @Valid DetalleProducto producto, BindingResult result){
+	
+		Map<String, Object> response = new HashMap<>();
+		if(result.hasErrors()) {
+
+			response = validationService.responseErrors(result);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}  
+		
+		
+		
+		DetalleProducto producto_encontrado = null; 
+		try {
+			producto_encontrado = detalleService.getById(producto.getId()); 
+			producto_encontrado.setStock(producto.getStock()); 
+			System.out.println("PRODUCTOXD "+producto_encontrado.getProducto().getNombre());
+			/*
+			producto_encontrado.setPrecio(producto.getPrecio()); 
+			producto_encontrado.setDescripcion(producto.getDescripcion()); 
+			producto_encontrado.setNombre(producto.getNombre()); */
+		}catch (Exception e){ 
+			response.put("Error", "Ha ocurrido un error al editar \n"+e.getCause());
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+			
+		
+		try {
+			DetalleProducto prodcuto_saved = detalleService.save(producto_encontrado); 
+			response.put("mensaje", "El producto ha sido agregado con éxito");
+			response.put("subproducto",prodcuto_saved); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+			
+		}catch(Exception e) {
+			response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+	
+	}
+	
 	
 	
 	

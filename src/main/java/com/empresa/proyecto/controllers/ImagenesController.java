@@ -73,12 +73,12 @@ public class ImagenesController {
 	}*/
 	
 	
-	@GetMapping("/productos/{nombre_producto}/{color}")
-	public ResponseEntity<Map<String,Object>> obtenerFotos(@PathVariable String nombre_producto,
+	@GetMapping("/productos/{id_producto}/{color}")
+	public ResponseEntity<Map<String,Object>> obtenerFotos(@PathVariable Long id_producto,
 			@PathVariable String color) throws IOException{
 		 
 		 Map<String,Object> response = new HashMap<>(); 
-		 
+		 String nombre_producto = id_producto.toString();
 		 String nombre_final = nombre_producto.replace(' ', '_'); 
 		 
 		 
@@ -111,14 +111,15 @@ public class ImagenesController {
 	}
 	
 	
-	@GetMapping("/productos/uploads/img/{nombre_producto}/{color}/{nombreFoto:.+}")
+	@GetMapping("/productos/uploads/img/{id_producto}/{color}/{nombreFoto:.+}")
 	public ResponseEntity<Resource> verFoto(
-			@PathVariable String nombre_producto,
+			@PathVariable Long id_producto,
 			@PathVariable String color,
 			@PathVariable String nombreFoto){
+		String nombre_producto = id_producto.toString();
 		String nombre_final = nombre_producto.replace(' ', '_'); 
 		  
-		System.out.println("LLEGA AQUI");
+		
 		Path rutaArchivo = Paths.get("uploads/"+nombre_final+"/"+color).resolve(nombreFoto).toAbsolutePath();
 		//Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
 		Resource recurso = null; 

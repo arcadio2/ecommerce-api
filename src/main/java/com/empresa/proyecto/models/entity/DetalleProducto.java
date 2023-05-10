@@ -42,7 +42,7 @@ public class DetalleProducto implements Serializable{
 	
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {})
 	@JsonIgnore
 	private Producto producto;  
  
