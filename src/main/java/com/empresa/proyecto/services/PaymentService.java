@@ -22,19 +22,19 @@ public class PaymentService {
 		
 		Map<String, Object> params = new HashMap<>();
 		params.put("amount", paymentIntentDto.getAmount());
-		params.put("descripcion", paymentIntentDto.getDescripcion());
-		//params.put("currency", paymentIntentDto.getCurrency());
+		params.put("description", paymentIntentDto.getDescripcion());
+		params.put("currency", paymentIntentDto.getCurrency());
 		
-		//ArrayList <String> payment_method_types = new ArrayList<>();
-		//payment_method_types.add("card");
+		ArrayList <String> payment_method_types = new ArrayList<>();
+		payment_method_types.add("card");
 		
-		//params.put("payment_method_types", payment_method_types);
+		params.put("payment_method_types", payment_method_types);
 		
 		System.out.println("El DTO:\n\n"+paymentIntentDto.getAmount()
 		+"\n"+paymentIntentDto.getDescripcion()
 		+"\n"+ params.values());
 		
-		return null;
+		return PaymentIntent.create(params);
 		
 	}
 	
