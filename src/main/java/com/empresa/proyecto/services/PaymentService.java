@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Service
 public class PaymentService {
-	@Value("${Stripe.apiKey.secret}")
+	@Value("${stripe.key.secret}")
 	String secretKey;
 	
 	public PaymentIntent paymentIntent(PaymentIntentDTO paymentIntentDto) throws StripeException {
@@ -23,14 +23,18 @@ public class PaymentService {
 		Map<String, Object> params = new HashMap<>();
 		params.put("amount", paymentIntentDto.getAmount());
 		params.put("descripcion", paymentIntentDto.getDescripcion());
-		params.put("currency", paymentIntentDto.getCurrency());
+		//params.put("currency", paymentIntentDto.getCurrency());
 		
-		ArrayList payment_method_types = new ArrayList<>();
-		payment_method_types.add("card");
+		//ArrayList <String> payment_method_types = new ArrayList<>();
+		//payment_method_types.add("card");
 		
-		params.put("payment_method_types", payment_method_types);
+		//params.put("payment_method_types", payment_method_types);
 		
-		return PaymentIntent.create(params);
+		System.out.println("El DTO:\n\n"+paymentIntentDto.getAmount()
+		+"\n"+paymentIntentDto.getDescripcion()
+		+"\n"+ params.values());
+		
+		return null;
 		
 	}
 	
