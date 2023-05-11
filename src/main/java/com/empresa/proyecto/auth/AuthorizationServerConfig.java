@@ -57,8 +57,8 @@ public class AuthorizationServerConfig  extends AuthorizationServerConfigurerAda
 		.secret(passwordEncoder.encode("12345"))
 		.scopes("read","write")
 		.authorizedGrantTypes("password", "refresh_token")
-		.accessTokenValiditySeconds(3600)
-		.refreshTokenValiditySeconds(3600); //lo renueva cada 3600 s
+		.accessTokenValiditySeconds(7200)
+		.refreshTokenValiditySeconds(7200); //lo renueva cada 3600 s
 		
 	}
 

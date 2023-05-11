@@ -82,6 +82,30 @@ public class CategoriasController {
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
 
 	}
+	@GetMapping("/tallas")
+	public ResponseEntity<Map<String, Object>> obtenerTallas(){
+		Map<String, Object> response = new HashMap<>();
+		
+		List<Talla> tallas = null; 
+		try {
+			tallas = tallasService.findAll(); 
+		}catch(Exception e) {
+			response.put("mensaje", "Ha ocurrido un error"); 
+			response.put("error", e.getMessage()); 
+			
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 
+		}
+		if(tallas.size()==0) {
+			response.put("mensaje", "no se han podido encontrar las tallas"); 
+			
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 
+		}
+		
+		response.put("mensaje", "se han encotrado las tallas"); 
+		response.put("tallas", tallas); 
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+
+	}
 	
 	@GetMapping("/categorias")
 	public ResponseEntity<Map<String, Object>> obtenerCategorias(){

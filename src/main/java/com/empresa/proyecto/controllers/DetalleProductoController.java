@@ -99,7 +99,7 @@ public class DetalleProductoController {
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@ResponseStatus(HttpStatus.CREATED)//201
 	public ResponseEntity<?> editProducto(@RequestBody @Valid DetalleProducto producto, BindingResult result){
-	
+	 
 		Map<String, Object> response = new HashMap<>();
 		if(result.hasErrors()) {
 
