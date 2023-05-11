@@ -46,8 +46,8 @@ insert into categoria_sexo(categoria_producto_id,sexo_id) values(4,2);
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(5,2); 
 */
 
-
-insert into perfil(altura,edad,foto,talla_camisa,talla_pantalon,sexo_id,usuario_id) values (1.75,12,"",34,32,1,1);
+//Cambie el tamaño de la talla superior
+insert into perfil(altura,edad,foto,talla_camisa,talla_pantalon,sexo_id,usuario_id) values (1.75,12,"",3,32,1,1);
 insert into direccion(colonia,cp,municipio,num_ext,num_int) values ("Benito Juarez",54469,"Nicolás Romero",12,12);
 insert into perfil_direcciones(perfil_id,direccion_id) values (1,1);
 
