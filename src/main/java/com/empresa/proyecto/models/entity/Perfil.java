@@ -66,12 +66,13 @@ public class Perfil implements Serializable{
 	@DecimalMin(value = "1.1",message = "No puedes ingresar una estatura tan baja en metros")
 	@DecimalMax(value = "2.3",message = "No puedes ingresar una estatura tan alta en metros")
 	private Double altura;
-	
-	@DecimalMin(value = "30",message = "No puedes ingresar una talla tan baja")
+
+	//Le cambie el minimo a las tallas porque guardo el id como valor
+	@DecimalMin(value = "0",message = "No puedes ingresar una talla tan baja")
 	@DecimalMax(value = "200",message = "No puedes ingresar una talla tan alto")
 	private Double talla_camisa; 
 	
-	@DecimalMin(value = "18",message = "No puedes ingresar una talla tan baja")
+	@DecimalMin(value = "0",message = "No puedes ingresar una talla tan baja")
 	@DecimalMax(value = "100",message = "No puedes ingresar una talla tan alto")
 	private Double talla_pantalon; 
 
