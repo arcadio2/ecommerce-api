@@ -24,7 +24,7 @@ public class Comentarios implements Serializable{
 	private Long Id; 
 	
 	//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade = {})
 	@JsonIgnore
 	private Producto producto; 
 	
@@ -126,11 +126,6 @@ public class Comentarios implements Serializable{
 	}
 
 
-	@Override
-	public String toString() {
-		return "Comentarios [producto=" + producto + ", usuario=" + usuario + ", username=" + username + ", comentario="
-				+ comentario + "]";
-	} 
 	
 	
 	

@@ -214,6 +214,7 @@ public class ProductosController {
 			response.put("error", "No se encontró el producto"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 		}
+		
 		response.put("mensaje", "Se ha encontrado el producto"); 
 		response.put("producto", producto_response); 
 		
@@ -231,7 +232,7 @@ public class ProductosController {
 	
 		Map<String, Object> response = new HashMap<>();
 		producto.setId(null);
-		if(result.hasErrors()) {
+		if(result.hasErrors()) { 
 
 			response = validationService.responseErrors(result);
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
@@ -300,6 +301,7 @@ public class ProductosController {
 		try {
 			producto_obtenido = productoService.getByNombre(producto); 
 			
+		 
 		}catch(Exception e) {
 			response.put("mensaje", "Ha ocurrido un error al econtrar el producto");
 			response.put("error", e.getMessage()); 

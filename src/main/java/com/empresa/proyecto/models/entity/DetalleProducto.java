@@ -39,12 +39,17 @@ public class DetalleProducto implements Serializable{
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Talla talla;
-	
-	
+
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {})
 	@JsonIgnore
 	private Producto producto;  
+	
+	
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JsonIgnore
+	@JoinColumn(name = "detalle_producto_id")
+	private List<Bolsa> bolsa; 
  
 	@Transient
 	private String nombre_producto; 
@@ -95,6 +100,15 @@ public class DetalleProducto implements Serializable{
 			return this.producto.getNombre();
 		}
 		return this.nombre_producto; 
+	}
+
+	
+	public List<Bolsa> getBolsa() {
+		return bolsa;
+	}
+
+	public void setBolsa(List<Bolsa> bolsa) {
+		this.bolsa = bolsa;
 	}
 
 	public void setNombre_producto(String nombre_producto) {

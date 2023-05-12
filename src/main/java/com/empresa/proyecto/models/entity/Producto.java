@@ -64,7 +64,7 @@ public class Producto implements Serializable{
 	private CategoriaProducto categoria; 
 	
 	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE) 
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
 	@JoinColumn(name = "producto_id")
 	private List<Comentarios> comentarios; 
 	/*
