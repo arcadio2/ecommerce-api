@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.empresa.proyecto.models.dao.IDetalleProductoDao;
 import com.empresa.proyecto.models.entity.Bolsa;
@@ -47,7 +48,7 @@ import com.empresa.proyecto.models.service.IComentariosService;
 import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
-
+import com.empresa.proyecto.services.IFileService;
 import com.empresa.proyecto.services.IValidationService;
 
 
@@ -77,6 +78,9 @@ public class ProductosController {
 	
 	@Autowired 
 	ICategoriaProductoService categoriaService; 
+	
+	@Autowired
+	IFileService fileService; 
 	
 	
 	@GetMapping("")
@@ -363,6 +367,49 @@ public class ProductosController {
 	public List<CategoriaProducto> obetenerCategoriasBySexo(@PathVariable String sexo){
 		System.out.println("SEX "+sexo);
 		return categoriaService.finBySexo(sexo);  
+	}
+	
+	
+	/**
+	 * SUBIR FOTO
+	 */
+	
+	@PostMapping("/productos/upload")
+	@Secured({"ROLE_ADMIN"})
+	public ResponseEntity<?> upload(@RequestParam(name = "file") MultipartFile[] archivo, 
+			@RequestParam("id_producto") String id,@RequestParam("color") String color){
+		Long id_producto = Long.parseLong(id);
+		System.out.println("ENTRAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+		System.out.println(archivo.length);
+		System.out.println(id+" "+color);
+		
+		Map<String, Object> response = new HashMap<>();
+		Producto producto = productoService.findById(id_producto); 
+		if(archivo.length!=0) {
+			String nombreArchivo = null;
+			try {
+				
+				//for(int i=0;i<archivo.length;i++) {
+					nombreArchivo = fileService.uploadImage(archivo,id,color);
+				//}
+				
+			} catch (IOException e) {
+				response.put("mensaje", "Error al subir la imagen");
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR); 
+			
+			}
+			//fileService.deleteImage(producto.getId());
+				 
+			//producto.setFoto(nombreArchivo); 
+			//usuarioService.saveProfile(producto);
+			response.put("producto", producto);
+			response.put("mensaje", "Se ha subidio correctamente la imagen "+nombreArchivo);
+			
+		}else {
+			response.put("error", "Debe seleccionar una imagen");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST); 
+		}
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK); 
 	}
 	
 	/*

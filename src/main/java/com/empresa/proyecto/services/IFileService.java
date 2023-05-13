@@ -15,10 +15,12 @@ public interface IFileService {
 	
 	public boolean deleteImage(Long id) ;
 	
-	public String uploadImage(MultipartFile archivo) throws IOException;
+	public String uploadImage(MultipartFile[] archivo,String id,String color) throws IOException;
 	
 	public String nombreUnico(String nombre);
 	
 	public Path getPath(String nombre); 
+	
+	public Path getPath(String nombre,String color,String id); 
 	
 }

@@ -259,7 +259,7 @@ public class UsuarioController {
 	
 	
 	
-	
+	/*
 	@PostMapping("/usuarios/upload")
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public ResponseEntity<?> upload(@RequestParam(name = "file") MultipartFile archivo, @RequestParam("username") String username){
@@ -288,7 +288,7 @@ public class UsuarioController {
 		}
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK); 
 	}
-	
+	*/
 	
 	/*IMAGEN DE PERFIL*/
 	@GetMapping("/usuarios/uploads/img/{nombreFoto:.+}")

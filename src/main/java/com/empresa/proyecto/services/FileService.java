@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,23 @@ public class FileService implements IFileService{
 	public Path getPath(String nombre) {
 		return Paths.get(DIR_UPLOAD).resolve(nombre).toAbsolutePath();
 	}
+	
+	@Override
+	public Path getPath(String nombre, String color, String id) {
+		
+		 Path folderPath = Paths.get(DIR_UPLOAD, id, color); // ruta de la carpeta que contendrá el archivo
+		    if (!Files.exists(folderPath)) { // si la carpeta no existe, la creamos
+		        try {
+		            Files.createDirectories(folderPath);
+		        } catch (IOException e) {
+		            throw new RuntimeException("No se pudo crear la carpeta de subida", e);
+		        }
+		    }
+		    return folderPath.resolve(nombre).toAbsolutePath(); // retornamos la ruta completa del archivo
+	}
+	
+	
+	
 
 	@Override
 	public boolean deleteImage(Long id) {
@@ -55,13 +73,40 @@ public class FileService implements IFileService{
 
 
 	@Override
-	public String uploadImage(MultipartFile archivo) throws IOException {
-		String nombreArchivo = this.nombreUnico(archivo.getOriginalFilename());
-		Path rutaArchivo = this.getPath(nombreArchivo);
-		Files.copy(archivo.getInputStream(), rutaArchivo);
-		return nombreArchivo; 
+	public String uploadImage(MultipartFile[] archivo,String id,String color) throws IOException {
+		//String nombreArchivo = this.nombreUnico(archivo.getOriginalFilename());
+		Path rutaCarpeta = this.getPath("1.jpg", color, id);
+		  // Eliminar carpeta y crearla de nuevo
+	    Path carpeta = rutaCarpeta.getParent();
+	    if (Files.exists(carpeta) && Files.isDirectory(carpeta)) {
+	        try {
+	            Files.walk(carpeta)
+	                 .sorted(Comparator.reverseOrder())
+	                 .forEach(archivoExistente -> {
+	                    try {
+	                        Files.delete(archivoExistente);
+	                    } catch (IOException e) {
+	                        throw new RuntimeException("No se pudo eliminar el archivo " + archivoExistente.getFileName(), e);
+	                    }
+	                 });
+	            Files.createDirectories(carpeta);
+	        } catch (IOException e) {
+	            throw new RuntimeException("No se pudo eliminar o crear la carpeta de subida", e);
+	        }
+	    }
+		for(int i=0;i<archivo.length;i++) {
+			 Path rutaArchivo = this.getPath((i+1)+".jpg", color, id);
+			 Files.copy(archivo[i].getInputStream(), rutaArchivo); 
+		}
+		 
+		    
 
-	}
+		
+		    
+		    
+		    return id;
+		
+	} 
 
 
  
@@ -91,4 +136,6 @@ public class FileService implements IFileService{
 		}
 		return recurso; 
 	}
+
+	
 }
