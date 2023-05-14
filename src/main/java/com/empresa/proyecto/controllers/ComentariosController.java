@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.proyecto.models.entity.ComentarioValoracion;
 import com.empresa.proyecto.models.entity.Comentarios;
 import com.empresa.proyecto.models.entity.ComentariosDto;
+import com.empresa.proyecto.models.entity.Producto;
 import com.empresa.proyecto.models.service.IComentariosService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
@@ -61,7 +62,10 @@ public class ComentariosController {
 			comentario.setValoracion(comentario_s.getValoracion());
 			comentario.setTitulo(comentario_s.getTitulo()); 
 			
+			Producto producto = null; 
+			
 			try {
+				producto = productoService.findById(id_producto); 
 				comentario.setProducto(productoService.findById(id_producto)); 
 				comentario.setUsuario(usuarioService.findByUsername(username)); 
 			}catch(Exception e) {
@@ -74,18 +78,23 @@ public class ComentariosController {
 				response = validationService.responseErrors(result);
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 			}  */
-			
+			Comentarios comentario_saved = null; 
 			try {
-				Comentarios comentario_saved = comentarioService.save(comentario); 
-				response.put("mensaje", "El comentario ha sido agregado con éxito");
-				response.put("comentario",comentario_saved); 
-				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+				comentario_saved = comentarioService.save(comentario); 
+				
 				
 			}catch(Exception e) {
 				response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
 			}
 		
+			List<Comentarios> comentarios = comentarioService.getByIdProducto(id_producto); 
+			Double promedio =this.obtenerPromedioValoracion(comentarios); 
+			producto.setValoracion_total(promedio); 
+			productoService.save(producto); 	
+			response.put("mensaje", "El comentario ha sido agregado con éxito");
+			response.put("comentario",comentario_saved); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 				
 		}
 		
@@ -101,7 +110,10 @@ public class ComentariosController {
 			comentario.setComentario(comentario_s.getComentario());
 			comentario.setValoracion(comentario_s.getValoracion());
 			comentario.setTitulo(comentario_s.getTitulo()); */
+			Producto producto = null; 
+			
 			try {
+				producto = productoService.findById(id_producto); 
 				comentario_s.setProducto(productoService.findById(id_producto)); 
 				comentario_s.setUsuario(usuarioService.findByUsername(username)); 
 			}catch(Exception e) {
@@ -109,23 +121,27 @@ public class ComentariosController {
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 
 			}
 			
+			
 			/*if(result.hasErrors()) {
 		
 				response = validationService.responseErrors(result);
 				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
 			}  */
-			
+			Comentarios comentario_saved = null;
 			try {
-				Comentarios comentario_saved = comentarioService.save(comentario_s); 
-				response.put("mensaje", "El comentario ha sido editado con éxito");
-				response.put("comentario",comentario_saved); 
-				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+				comentario_saved = comentarioService.save(comentario_s); 
 				
 			}catch(Exception e) {
 				response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
 			}
-		
+			List<Comentarios> comentarios = comentarioService.getByIdProducto(id_producto); 
+			Double promedio =this.obtenerPromedioValoracion(comentarios); 
+			producto.setValoracion_total(promedio); 
+			productoService.save(producto); 
+			response.put("mensaje", "El comentario ha sido editado con éxito");
+			response.put("comentario",comentario_saved); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
 		}
 		
 
@@ -234,7 +250,19 @@ public class ComentariosController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
 		}
 		
-	
+		public double obtenerPromedioValoracion(List<Comentarios> comentarios) {
+		    if (comentarios.isEmpty()) {
+		        return 0.0;
+		    }
+		    
+		    double sumaValoraciones = 0.0;
+		    for (Comentarios comentario : comentarios) {
+		        sumaValoraciones += comentario.getValoracion();
+		    }
+		    
+		    return sumaValoraciones / comentarios.size();
+		}
+
 
 	
 }
