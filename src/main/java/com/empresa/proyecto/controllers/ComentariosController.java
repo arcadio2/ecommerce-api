@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +59,8 @@ public class ComentariosController {
 			Comentarios comentario = new Comentarios(); 
 			comentario.setComentario(comentario_s.getComentario());
 			comentario.setValoracion(comentario_s.getValoracion());
+			comentario.setTitulo(comentario_s.getTitulo()); 
+			
 			try {
 				comentario.setProducto(productoService.findById(id_producto)); 
 				comentario.setUsuario(usuarioService.findByUsername(username)); 
@@ -84,6 +87,45 @@ public class ComentariosController {
 			}
 		
 				
+		}
+		
+		@Secured({"ROLE_USER"})
+		@PutMapping("/comentario/{id_producto}")
+		public ResponseEntity<?> editCpmentario(@PathVariable Long id_producto,
+				@RequestBody  Comentarios comentario_s,
+				Authentication authentication){
+				
+			String username = authentication.getName();
+			Map<String, Object> response = new HashMap<>();
+			/*Comentarios comentario = new Comentarios(); 
+			comentario.setComentario(comentario_s.getComentario());
+			comentario.setValoracion(comentario_s.getValoracion());
+			comentario.setTitulo(comentario_s.getTitulo()); */
+			try {
+				comentario_s.setProducto(productoService.findById(id_producto)); 
+				comentario_s.setUsuario(usuarioService.findByUsername(username)); 
+			}catch(Exception e) {
+				response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 
+			}
+			
+			/*if(result.hasErrors()) {
+		
+				response = validationService.responseErrors(result);
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+			}  */
+			
+			try {
+				Comentarios comentario_saved = comentarioService.save(comentario_s); 
+				response.put("mensaje", "El comentario ha sido editado con éxito");
+				response.put("comentario",comentario_saved); 
+				return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+				
+			}catch(Exception e) {
+				response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
+				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+			}
+		
 		}
 		
 
@@ -146,12 +188,14 @@ public class ComentariosController {
 		
 
 		//OBTENER COMENTARIO POR USUARIO Y PRODUCTO
-		@GetMapping("/comentarios/{username}/{producto_id}")
-		@Secured({"ROLE_ADMIN","ROLE_USER","ROLE_INSTRUCTOR"})
-		public ResponseEntity<?> getComentariosByU(@PathVariable String username, @PathVariable Long producto_id){
+		@GetMapping("/comentario/usuario/{producto_id}")
+		@Secured({"ROLE_ADMIN","ROLE_USER"})
+		public ResponseEntity<?> getComentariosByU(@PathVariable Long producto_id,
+				Authentication authentication){
+			String username = authentication.getName(); 
 			Map<String, Object> response = new HashMap<>();
 			Comentarios comentario = null;  
-			try {
+			try { 
 				comentario = comentarioService.getByUsernameAndPerfil(username,producto_id);
 			}catch(Exception e) {
 				response.put("error", "No se encontró el comentario"); 
@@ -162,7 +206,7 @@ public class ComentariosController {
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 			}
 			response.put("mensaje", "Se ha encontrado el comentario"); 
-			response.put("valoracion", comentario); 
+			response.put("comentario", comentario); 
 			
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 	
 		}

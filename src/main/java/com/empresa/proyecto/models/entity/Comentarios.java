@@ -10,18 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "comentarios")
+@Table(name = "comentarios",
+uniqueConstraints  = { @UniqueConstraint(columnNames = {"usuario_id", "producto_id"} ) }
+)
 public class Comentarios implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id; 
+	private Long Id;  
 	
 	//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@ManyToOne(fetch = FetchType.LAZY,cascade = {})
