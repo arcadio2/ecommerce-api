@@ -16,7 +16,9 @@ public interface IBolsaService {
 	
 	public void delete(Bolsa bolsa); 
 	
+	public void deleteAllByUSername(String username); 
 	
+	public void vaciarBolsaUsuario(String username);
 	
 
 }

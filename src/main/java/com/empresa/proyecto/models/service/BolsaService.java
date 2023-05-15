@@ -2,6 +2,8 @@ package com.empresa.proyecto.models.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,5 +41,20 @@ public class BolsaService implements IBolsaService{
 		bolsaDao.delete(bolsa);
 		
 	}
+
+	@Override
+	@Transactional
+
+	public void deleteAllByUSername(String username) {
+		bolsaDao.deleteByUsuarioUsername(username);
+		
+	}
+	
+	@Override
+	public void vaciarBolsaUsuario(String username) {
+	    List<Bolsa> bolsaUsuario = bolsaDao.getByUsername(username);
+	    bolsaDao.deleteAll(bolsaUsuario);
+	}
+
 
 }

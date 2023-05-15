@@ -211,6 +211,33 @@ public class CarritoController {
 
 	}
 	
+	@DeleteMapping("/bolsa")  
+	@Secured({"ROLE_USER"})
+	@ResponseStatus(code = HttpStatus.OK)
+	public ResponseEntity<?> deleteAllBolsa(Authentication auth){
+		String username = auth.getName(); 
+		Map<String, Object> response = new HashMap<>();
+		Usuario usuarioObtenido = null; 
+		try {
+			usuarioObtenido = usuarioService.findByUsername(username);   
+		}catch(Exception e) {
+			response.put("mensaje", "No se ha encontrado el usuario");
+			response.put("error", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		} 
+		
+		try {
+			bolsaService.vaciarBolsaUsuario(username); 
+		}catch(Exception e) {
+			response.put("mensaje", "No se ha podido eliminar la bolsa");
+			response.put("error", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}
+		response.put("mensaje", "Se ha eliminado la bolsa");
+		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.ACCEPTED);
+	}
+	
+	
 	
 	
 	
