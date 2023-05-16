@@ -88,9 +88,10 @@ public class Usuario implements Serializable{
 	@JoinColumn(name = "usuario_id")
 	private List<Bolsa> bolsa;  
 	
-	@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+	//@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL) 
 	@JoinColumn(name = "usuario_id")
+	@JsonIgnore
 	private List<Compra> compras;  
 	
 	

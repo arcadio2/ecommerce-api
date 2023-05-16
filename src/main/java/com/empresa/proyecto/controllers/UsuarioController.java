@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.empresa.proyecto.models.entity.Usuario;
-
+import com.empresa.proyecto.models.entity.docs.UserPassword;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Producto;
 import com.empresa.proyecto.models.entity.Role;
@@ -355,6 +355,59 @@ public class UsuarioController {
 		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
 		
 	}
+	
+	@PutMapping("/user/contrasenia")
+	@Secured({"ROLE_USER"})
+	public ResponseEntity<?> cambiarContraseña(@RequestBody @Valid UserPassword usuario,
+			BindingResult result, Authentication auth){
+		Map<String, Object> response = new HashMap<>();
+		
+
+		String username = auth.getName(); 
+		System.out.println("EL USUARIO ES "+username);
+		Usuario usuarioObtenido = null; 
+		try {
+			usuarioObtenido = usuarioService.findByUsername(username); 
+		}catch(Exception e) {
+			response.put("mensaje", "No se ha encontrado el usuario a editar");
+			response.put("error", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		if(result.hasErrors()) {
+			
+			response = validationService.responseErrors(result);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}  
+		//String viejaEncode = passwordEncoder.encode(usuario.getVieja());
+		boolean contrasenasCoinciden = passwordEncoder.matches(usuario.getVieja(), usuarioObtenido.getPassword());
+		if(contrasenasCoinciden!=true) {
+			response.put("mensaje", "La contraseña que proporcionaste es incorrecta");
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}
+		
+		
+		String pssSaved = passwordEncoder.encode(usuario.getContrasenia()); 
+		usuarioObtenido.setPassword(pssSaved); 
+		Usuario usuarioUpdated = null; 
+		try {
+			usuarioUpdated = usuarioService.save(usuarioObtenido); 
+		}catch(Exception e) {
+			response.put("mensaje", "No se ha podido guardar el usuario");
+			System.out.println(e.getMessage());
+			response.put("error", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		response.put("mensaje","Se ha actualizado la contraseña");
+		response.put("usuario", usuarioUpdated); 
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK);
+		
+		
+		
+		
+	}
+	
+	
 	@PutMapping("/user/makeInstructor")
 	@Secured({"ROLE_ADMIN"})
 	@ResponseStatus(code = HttpStatus.OK)
@@ -411,6 +464,7 @@ public class UsuarioController {
 	public ResponseEntity<?> deleteUser(@PathVariable String username){
 		Map<String, Object> response = new HashMap<>();
 		Usuario usuarioObtenido = null; 
+		
 		try {
 			usuarioObtenido = usuarioService.findByUsername(username);   
 		}catch(Exception e) {
