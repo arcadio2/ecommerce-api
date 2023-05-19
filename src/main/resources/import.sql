@@ -46,7 +46,7 @@ insert into categoria_sexo(categoria_producto_id,sexo_id) values(4,2);
 insert into categoria_sexo(categoria_producto_id,sexo_id) values(5,2); 
 */
 
-//Cambie el tamaño de la talla superior
+#Cambie el tamaño de la talla superior
 insert into perfil(altura,edad,foto,talla_camisa,talla_pantalon,sexo_id,usuario_id) values (1.75,12,"",3,32,1,1);
 insert into direccion(colonia,cp,municipio,num_ext,num_int) values ("Benito Juarez",54469,"Nicolás Romero",12,12);
 insert into perfil_direcciones(perfil_id,direccion_id) values (1,1);
@@ -70,7 +70,7 @@ insert into colores(color,hexadecimal) values ("verde","#afbfab");
 insert into colores(color,hexadecimal) values ("azul","#91a5bb"); 
 insert into colores(color,hexadecimal) values ("blanco","#d2d3d4");
 insert into colores(color,hexadecimal) values ("negro","#0A0A0A");  
-
+insert into colores(color,hexadecimal) values ("morado","#bc4ed8");  
 
 insert into categoria_tallas(categoria) values("tronco superior");
 insert into categoria_tallas(categoria) values("tronco inferior");

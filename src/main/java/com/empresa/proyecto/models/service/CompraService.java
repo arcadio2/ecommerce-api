@@ -2,6 +2,8 @@ package com.empresa.proyecto.models.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class CompraService implements ICompraService{
 	private IComprasDao comprasDao; 
 	
 	@Override
+	@Transactional
 	public Compra save(Compra compra) {
 		// TODO Auto-generated method stub
 		return comprasDao.save(compra);
