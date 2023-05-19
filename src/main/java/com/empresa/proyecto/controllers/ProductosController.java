@@ -42,12 +42,14 @@ import com.empresa.proyecto.models.entity.DetalleProducto;
 import com.empresa.proyecto.models.entity.DetalleProductoDto;
 import com.empresa.proyecto.models.entity.Perfil;
 import com.empresa.proyecto.models.entity.Producto;
+import com.empresa.proyecto.models.entity.Talla;
 import com.empresa.proyecto.models.service.IBolsaService;
 import com.empresa.proyecto.models.service.ICategoriaProductoService;
 import com.empresa.proyecto.models.service.IComentariosService;
 import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IProductoService;
 import com.empresa.proyecto.models.service.IUsuarioService;
+import com.empresa.proyecto.models.service.ItallaService;
 import com.empresa.proyecto.services.IFileService;
 import com.empresa.proyecto.services.IValidationService;
 
@@ -71,6 +73,9 @@ public class ProductosController {
 	
 	@Autowired
 	IBolsaService bolsaService; 
+	
+	@Autowired 
+	ItallaService tallaService; 
 
 	
 	@Autowired
@@ -107,7 +112,8 @@ public class ProductosController {
 										@RequestParam(required = false) String categoria,
 										@RequestParam(required = false) String genero,
 										@RequestParam(required = false) String color,
-										@RequestParam(required = false) String talla){
+										@RequestParam(required = false) String talla,
+										Authentication auth){
 		Map<String, Object> response = new HashMap<>();
 		System.out.println("Nombre "+nombre);
 		System.out.println("Categoria "+categoria);
@@ -157,8 +163,29 @@ public class ProductosController {
 		}else {
 			try {
 				if(nombre.equals("null") && !categoria.equals("null") && genero.equals("null")) {
-					System.out.println("Entra aca");
-					List<Producto> productos = productoService.getByCategoria(categoria); 
+					System.out.println("CHALEEEEE ");
+					List<Producto> productos = null; 
+					
+			
+					if(categoria.equalsIgnoreCase("Para ti")) {
+						String username = auth.getName(); 
+						Perfil perfil = usuarioService.getProfileByUsername(username);
+						boolean isHombre = true ? perfil.getSexo().getSexo().equalsIgnoreCase("Hombre") : false; 
+						Talla talla_s = tallaService.findById(perfil.getTalla_camisa().longValue());  
+						
+						String talla_camisa = talla_s.getTalla(); 
+						String talla_pantalon = ((int) perfil.getTalla_pantalon().doubleValue())+"";
+						
+						System.out.println(isHombre+" "+talla_camisa+" "+talla_pantalon);
+						
+						productos = productoService.getByPrefil(isHombre, talla_pantalon, talla_camisa); 
+					}else if(categoria.equalsIgnoreCase("Novedades")) {
+			
+						productos = productoService.getNovedades(); 
+					}else {
+		
+						productos = productoService.getByCategoria(categoria); 
+					}
 					response.put("success", "Se han encontrado los productos"); 
 					response.put("productos", productos); 
 					return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
@@ -191,6 +218,7 @@ public class ProductosController {
 				} 
 			}catch(Exception e) { 
 				response.put("error", "No se encontró el producto"); 
+				System.out.println(e.getMessage());
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
 			}
 			

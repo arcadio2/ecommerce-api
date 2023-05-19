@@ -40,12 +40,12 @@ public class Producto implements Serializable{
 	private String descripcion; 
 	
 	@NotNull(message = "Debes ingresar un precio")
-	private Double precio; 
+	private Double precio;  
 	 
 	
 	private Double valoracion_total; 
 	 
-
+ 
 	
 	@Temporal(TemporalType.DATE)
 	private Date fecha_subida;

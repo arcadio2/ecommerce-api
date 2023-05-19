@@ -18,6 +18,13 @@ public interface IProductoDao extends CrudRepository<Producto,Long>{
 	@Query("select p from Producto p join fetch p.categoria c where c.tipo=?1")
 	public List<Producto> getByCategoria(String categoria);
 	
+	@Query("select p from Producto p ORDER BY p.fecha_subida DESC")
+	public List<Producto> getNovedades();
+	
+	@Query("select distinct p from Producto p join fetch p.categoria a join fetch p.detalle d join fetch d.color c "
+			+ "join fetch d.talla t where  p.isHombre=?1 and (t.talla=?2 or t.talla=?3 )")
+	public List<Producto> getByPerfil(boolean isHombre, String talla_pant, String talla_cam);
+	
 	@Query("select p from Producto p join fetch p.detalle d join fetch d.talla t where t.talla in ?1")
 	public List<Producto> getByTalla(List<String> talla);
 	

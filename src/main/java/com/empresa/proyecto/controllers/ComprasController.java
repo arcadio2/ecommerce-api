@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.proyecto.models.entity.Compra;
+import com.empresa.proyecto.models.entity.Direccion;
 import com.empresa.proyecto.models.entity.Usuario;
 import com.empresa.proyecto.models.service.ICompraService;
+import com.empresa.proyecto.models.service.IDireccionesService;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
 @RestController
@@ -29,6 +31,9 @@ public class ComprasController {
 	
 	@Autowired 
 	private ICompraService compraService; 
+	
+	@Autowired 
+	private IDireccionesService direccionesService;  
 	
 	@Autowired
 	IUsuarioService usuarioService; 
@@ -59,10 +64,14 @@ public class ComprasController {
 	@Secured({"ROLE_USER"})
 	public ResponseEntity<?> saveByUser(@RequestBody List<Compra> compras, Authentication auth){
 		Map<String, Object> response = new HashMap<>(); 
-		String username = auth.getName(); 
+		String username = auth.getName();
+		
+		
 		Usuario  usuario = null; 
+		Direccion direccion = null; 
 		try {
 			usuario = usuarioService.findByUsername(username); 
+			direccion = direccionesService.save(compras.get(0).getDireccion()); 
 		}catch(Exception e) {
 			response.put("mensaje", "Ha ocurrido un error"); 
 			response.put("error", e.getMessage()); 
@@ -74,6 +83,7 @@ public class ComprasController {
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.UNAUTHORIZED); 
 		}
 		for(Compra c: compras ) {
+			c.setDireccion(direccion); 
 			c.setUsuario(usuario); 
 		}
 		List<Compra> compras_guardadas = null; 

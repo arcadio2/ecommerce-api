@@ -102,6 +102,18 @@ public class ProductoService implements IProductoService{
 		return productoDao.getProductoByIdDetalle(id);
 	}
 
+	@Override
+	public List<Producto> getNovedades() {
+		// TODO Auto-generated method stub
+		return productoDao.getNovedades();
+	}
+
+	@Override
+	public List<Producto> getByPrefil(boolean isHombre, String talla_pant, String talla_cam) {
+		// TODO Auto-generated method stub
+		return productoDao.getByPerfil(isHombre, talla_pant, talla_cam);
+	}
+
 
 
 	

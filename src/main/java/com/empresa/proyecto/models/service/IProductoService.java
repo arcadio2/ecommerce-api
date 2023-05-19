@@ -18,6 +18,10 @@ public interface IProductoService {
 	
 	public void delete(Producto producto); 
 	
+	public List<Producto> getNovedades(); 
+	
+	public List<Producto> getByPrefil(boolean isHombre, String talla_pant, String talla_cam); 
+	
 	public List<Producto> getBySexo(boolean isHombre);
 	public List<Producto> getBySexoAndCategoria(boolean isHombre,String categoria);
 	public Producto getProductoByIdDetalle(Long  id);

@@ -22,9 +22,9 @@ public class TallaService implements ItallaService{
 	}
 
 	@Override
-	public Talla findById() {
+	public Talla findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return tallaDao.findById(id).orElse(null); 
 	}
 
 	@Override
