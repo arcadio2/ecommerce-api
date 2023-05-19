@@ -28,7 +28,7 @@ public class CompraService implements ICompraService{
 	@Override
 	public List<Compra> getByUser(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		return comprasDao.getByUsername(username);
 	}
 
 	@Override

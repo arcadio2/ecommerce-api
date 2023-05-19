@@ -59,7 +59,7 @@ insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,valoracion
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,fecha_subida) values ("no se","camisa shine",287,3,true, '2022-01-12');
 
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,fecha_subida) values ("no se","playera clash",569,1,false, '2022-01-12'); 
-insert into producto(descripcion,nombre,precio,categoria_id,is_hombre.fecha_subida) values ("no se","playera shine",10000,1,true, '2022-01-12'); 
+insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,fecha_subida) values ("no se","playera shine",10000,1,true, '2022-01-12'); 
 
 #prueba
 insert into producto(descripcion,nombre,precio,categoria_id,is_hombre,fecha_subida) values ("Camisa cómoda, útil para salir de fiesta","camisa clasica",10000,3,true, '2022-01-12'); 

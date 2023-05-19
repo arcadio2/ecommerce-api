@@ -44,9 +44,29 @@ public class ComprasController {
 	public ResponseEntity<?> getByUser(Authentication auth){
 		Map<String, Object> response = new HashMap<>(); 
 		String username = auth.getName(); 
+		System.out.println("USUARIOOOO   "+username);
 		List<Compra>  compras = null; 
 		try {
 			compras = compraService.getByUser(username); 
+		}catch(Exception e) {
+			response.put("mensaje", "Ha ocurrido un error"); 
+			response.put("error", e.getMessage()); 
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR); 
+		}
+		response.put("mensaje", "Se han pobtenido las compras"); 
+		response.put("compras", compras); 
+		
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.OK); 
+	}
+	
+	@GetMapping("/get/all")
+	@Secured({"ROLE_ADMIN"})
+	public ResponseEntity<?> getAll(){
+		Map<String, Object> response = new HashMap<>(); 
+
+		List<Compra>  compras = null; 
+		try {
+			compras = compraService.getAll(); 
 		}catch(Exception e) {
 			response.put("mensaje", "Ha ocurrido un error"); 
 			response.put("error", e.getMessage()); 

@@ -46,7 +46,7 @@ public interface IProductoDao extends CrudRepository<Producto,Long>{
 	
 	@Query("select p from Producto p  where p.isHombre=?1")
 	public List<Producto> getBySexo(boolean isHombre);
-	
+	 
 	@Query("select p from Producto p join fetch p.categoria c where p.isHombre=?1  and c.tipo=?2")
 	public List<Producto> getBySexoAndCategoria (boolean isHombre,String categoria);
 	
