@@ -21,6 +21,7 @@ import com.empresa.proyecto.models.entity.Compra;
 import com.empresa.proyecto.models.entity.Direccion;
 import com.empresa.proyecto.models.entity.Usuario;
 import com.empresa.proyecto.models.service.ICompraService;
+import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IDireccionesService;
 import com.empresa.proyecto.models.service.IUsuarioService;
 
@@ -37,6 +38,9 @@ public class ComprasController {
 	
 	@Autowired
 	IUsuarioService usuarioService; 
+	
+	@Autowired
+	private IDetalleProductoService detalleService; 
 	
 	
 	@GetMapping("/get")
@@ -105,14 +109,26 @@ public class ComprasController {
 		for(Compra c: compras ) {
 			c.setDireccion(direccion); 
 			c.setUsuario(usuario); 
+			
 		}
 		List<Compra> compras_guardadas = null; 
 		try {
-			compras_guardadas = compraService.saveAll(compras); 
+			compras_guardadas = compraService.saveAll(compras);
+			
+			
 		}catch(Exception e) {
 			response.put("mensaje", "Ha ocurrido un error"); 
 			response.put("error", e.getMessage()); 
 			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.INTERNAL_SERVER_ERROR); 
+		}
+		for(Compra c: compras_guardadas ) {
+			try {
+				c.getDetalle_producto().setStock(c.getDetalle_producto().getStock()-c.getCantidad()); 
+				detalleService.save(c.getDetalle_producto()); 
+			}catch(Exception e) {
+				
+			}
+			
 		}
 		
 		response.put("mensaje", "Se han guardado las compras"); 

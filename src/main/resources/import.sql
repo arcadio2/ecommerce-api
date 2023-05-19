@@ -141,6 +141,7 @@ insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) val
 
 insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) values (2,2,4,"Muy buen producto","XD");
 
+insert into compras(detalle_producto_id,direccion_id,usuario_id) values(1,1,1); 
 
 #insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,1,5); 
 #insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,2,3.5); 

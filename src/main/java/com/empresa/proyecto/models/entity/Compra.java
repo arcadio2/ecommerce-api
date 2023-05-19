@@ -44,6 +44,10 @@ public class Compra implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Direccion direccion; 
 	
+	private Integer cantidad; 
+	
+
+	
 	
 	@PrePersist
 	public void iniciarFecha() {
@@ -96,6 +100,14 @@ public class Compra implements Serializable{
 
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+
+	public Integer getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 	
 	
