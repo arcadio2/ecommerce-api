@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.proyecto.models.entity.Compra;
 import com.empresa.proyecto.models.entity.Direccion;
 import com.empresa.proyecto.models.entity.Usuario;
+import com.empresa.proyecto.models.service.IBolsaService;
 import com.empresa.proyecto.models.service.ICompraService;
 import com.empresa.proyecto.models.service.IDetalleProductoService;
 import com.empresa.proyecto.models.service.IDireccionesService;
@@ -41,6 +42,9 @@ public class ComprasController {
 	
 	@Autowired
 	private IDetalleProductoService detalleService; 
+	
+	@Autowired
+	private IBolsaService bolsaService; 
 	
 	
 	@GetMapping("/get")
@@ -108,11 +112,14 @@ public class ComprasController {
 		}
 		for(Compra c: compras ) {
 			c.setDireccion(direccion); 
+			c.setDetalle_producto(detalleService.getById(c.getDetalle_producto().getId()));
 			c.setUsuario(usuario); 
-			
 		}
+		
+		
 		List<Compra> compras_guardadas = null; 
 		try {
+			bolsaService.deleteAllByUSername(username); 
 			compras_guardadas = compraService.saveAll(compras);
 			
 			
