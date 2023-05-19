@@ -119,7 +119,7 @@ public class ComprasController {
 		
 		List<Compra> compras_guardadas = null; 
 		try {
-			bolsaService.deleteAllByUSername(username); 
+			bolsaService.vaciarBolsaUsuario(username); 
 			compras_guardadas = compraService.saveAll(compras);
 			
 			
