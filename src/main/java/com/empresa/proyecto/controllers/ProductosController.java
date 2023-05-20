@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +109,7 @@ public class ProductosController {
 	
 	@GetMapping("/listado")
 	//@ResponseStatus(HttpStatus.OK)
+	@PermitAll
 	public ResponseEntity<?> getSimilares(@RequestParam(required = false) String nombre,
 										@RequestParam(required = false) String categoria,
 										@RequestParam(required = false) String genero,

@@ -37,6 +37,8 @@ public class Compra implements Serializable{
 	private String codigo_seguimiento; 
 	
 	
+	private boolean active; 
+	
 	@Temporal(TemporalType.DATE)
 	private Date fecha_compra; 
 	
@@ -45,6 +47,8 @@ public class Compra implements Serializable{
 	private Direccion direccion; 
 	
 	private Integer cantidad; 
+	
+	private Double precio; 
 	
 
 	
@@ -108,6 +112,14 @@ public class Compra implements Serializable{
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 	
