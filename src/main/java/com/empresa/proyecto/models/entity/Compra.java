@@ -121,6 +121,14 @@ public class Compra implements Serializable{
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+
+	public Double getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(Double precio) {
+		this.precio = precio;
+	}
 	
 	
 	

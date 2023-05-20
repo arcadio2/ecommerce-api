@@ -54,6 +54,9 @@ public class DetalleProducto implements Serializable{
 	@Transient
 	private String nombre_producto; 
 	
+	@Transient
+	private Long id_producto; 
+	
 	
 	public Long getId() {
 		return Id;
@@ -113,6 +116,17 @@ public class DetalleProducto implements Serializable{
 
 	public void setNombre_producto(String nombre_producto) {
 		this.nombre_producto = nombre_producto;
+	}
+
+	public Long getId_producto() {
+		if(this.producto!=null) {
+			return this.producto.getId();
+		}
+		return this.id_producto; 
+	}
+
+	public void setId_producto(Long id_producto) {
+		this.id_producto = id_producto;
 	}
 
  
