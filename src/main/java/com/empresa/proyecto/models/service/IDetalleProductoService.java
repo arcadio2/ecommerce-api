@@ -18,5 +18,8 @@ public interface IDetalleProductoService {
 	public DetalleProducto getByNombreProductoAndTallaAndColor(String nombre_producto,String talla, String color); 
 	
 	public DetalleProducto getByIdProductoAndTallaAndColor(Long id,String talla, String color);
+	
+	public void delete(Long id); 
+	public void delete(DetalleProducto detalle); 
 
 }

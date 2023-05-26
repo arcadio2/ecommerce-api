@@ -63,4 +63,20 @@ public class DetalleProductoService implements IDetalleProductoService{
 		}
 	}
 
+
+
+	@Override
+	public void delete(Long id) {
+		detalleDao.deleteById(id);
+		
+	}
+
+
+
+	@Override
+	public void delete(DetalleProducto detalle) {
+		detalleDao.delete(detalle);
+		
+	}
+
 }

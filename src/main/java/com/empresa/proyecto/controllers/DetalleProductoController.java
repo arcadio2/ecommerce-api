@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -96,7 +97,7 @@ public class DetalleProductoController {
 	
 	/*Método para aumentar el stock*/
 	@PutMapping("/edit")
-	@Secured({"ROLE_ADMIN","ROLE_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@ResponseStatus(HttpStatus.CREATED)//201
 	public ResponseEntity<?> editProducto(@RequestBody @Valid DetalleProducto producto, BindingResult result){
 	 
@@ -137,6 +138,29 @@ public class DetalleProductoController {
 	
 	}
 	
+	
+	@DeleteMapping("/delete/{id}")
+	@Secured({"ROLE_ADMIN"})
+	public ResponseEntity<?> deleteDetalle(@PathVariable Long id){
+		Map<String, Object> response = new HashMap<>();
+		DetalleProducto detalle = null; 
+		try {
+			detalle = detalleService.getById(id);
+			detalleService.delete(detalle);
+			
+		
+		}catch(Exception e) {
+			response.put("error", "No se encontró el producto"); 
+			
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+	
+		response.put("mensaje", "Se ha eliminado el producto"); 
+		response.put("producto", convertir(detalle)); 
+		
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK); 
+		
+	}
 	
 	
 	
