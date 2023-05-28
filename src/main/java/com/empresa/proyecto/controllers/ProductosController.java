@@ -287,7 +287,7 @@ public class ProductosController {
 	}
 	
 
-	@PutMapping("/edit")
+	@PutMapping("/edit") 
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	@ResponseStatus(HttpStatus.CREATED)//201
 	public ResponseEntity<?> editProducto(@RequestBody @Valid Producto producto, BindingResult result){

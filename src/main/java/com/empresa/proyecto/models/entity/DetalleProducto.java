@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,7 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
-@Table(name = "detalle_producto") 
+@Table(name = "detalle_producto"
+ 	,uniqueConstraints = @UniqueConstraint(columnNames = {"color_id", "talla_id", "producto_id"}))
 public class DetalleProducto implements Serializable{
 	
 	private static final long serialVersionUID = 1L;

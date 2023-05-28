@@ -1,6 +1,7 @@
 package com.empresa.proyecto.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,6 +140,36 @@ public class DetalleProductoController {
 	
 	}
 	
+	@PostMapping("/add")
+	@Secured({"ROLE_ADMIN"})
+	public ResponseEntity<?> addDetalle(@RequestBody @Valid List<DetalleProductoDto> productos, BindingResult result){
+		Map<String, Object> response = new HashMap<>();
+		if(result.hasErrors()) {
+
+			response = validationService.responseErrors(result);
+			return new ResponseEntity<Map<String,Object>>(response,HttpStatus.BAD_REQUEST);
+		}  
+		DetalleProducto guardado = null; 
+		
+		try {
+			for(DetalleProductoDto d:productos) {
+				DetalleProducto detalle = convertir2(d); 
+				System.out.println("EL DETALLE"+ detalle);
+				guardado = detalleService.save(detalle); 
+			}
+			
+		}catch(Exception e) {
+			response.put("Error", "Ha ocurrido un error al guardar \n"+e.getCause());
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+		
+		response.put("mensaje", "El producto ha sido agregado con éxito");
+		response.put("subproducto",guardado); 
+		return new ResponseEntity<Map<String,Object>>(response,HttpStatus.CREATED);
+		
+	}
+	
+	
 	
 	@DeleteMapping("/delete/{id}")
 	@Secured({"ROLE_ADMIN"})
@@ -166,6 +198,17 @@ public class DetalleProductoController {
 	
 	public DetalleProductoDto convertir(DetalleProducto detalle) {
 		DetalleProductoDto detalle_final = new DetalleProductoDto();
+		detalle_final.setColor(detalle.getColor());
+		detalle_final.setId(detalle.getId());
+		detalle_final.setProducto(detalle.getProducto());
+		detalle_final.setStock(detalle.getStock());
+		detalle_final.setTalla(detalle.getTalla());
+		
+		return detalle_final; 
+		
+	}
+	public DetalleProducto convertir2(DetalleProductoDto detalle) {
+		DetalleProducto detalle_final = new DetalleProducto();
 		detalle_final.setColor(detalle.getColor());
 		detalle_final.setId(detalle.getId());
 		detalle_final.setProducto(detalle.getProducto());
