@@ -13,7 +13,7 @@ public interface IDetalleProductoDao extends CrudRepository<DetalleProducto, Lon
 	@Query("select d from DetalleProducto d "
 			+ "join fetch d.color c join fetch d.talla t"
 			+ " join fetch d.producto p"
-			+ " where p.nombre=?1 and t.talla=?2 and c.color=?3")
+			+ " where p.nombre=?1 and t.talla=?2 and c.color=?3 and d.stock > 0")
 	public List<DetalleProducto> getByNombreProductoAndTallaAndColor(String nombre_producto,String talla, String color); 
 
 	

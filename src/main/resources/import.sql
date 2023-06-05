@@ -104,7 +104,7 @@ insert into tallas(talla,tronco_superior) values ("40",0);
 
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,1,1,3);
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (2,1,2,4);
-insert into detalle_producto(color_id,producto_id,talla_id,stock) values (3,1,1,5);
+insert into detalle_producto(color_id,producto_id,talla_id,stock) values (3,1,1,0);
 
 
 insert into detalle_producto(color_id,producto_id,talla_id,stock) values (1,2,8,3);
@@ -141,7 +141,7 @@ insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) val
 
 insert into comentarios(producto_id,usuario_id,valoracion,comentario,titulo) values (2,2,4,"Muy buen producto","XD");
 
-insert into compras(detalle_producto_id,direccion_id,usuario_id) values(1,1,1); 
+insert into compras(detalle_producto_id,direccion_id,usuario_id,active,codigo_seguimiento,precio,fecha_compra) values(1,1,1,1,"bghdjauey732ds",367,'2022-01-12'); 
 
 #insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,1,5); 
 #insert into valoracion_producto(producto_id,usuario_id,valoracion) values (1,2,3.5); 

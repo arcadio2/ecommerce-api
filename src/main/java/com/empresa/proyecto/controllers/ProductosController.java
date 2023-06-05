@@ -373,7 +373,7 @@ public class ProductosController {
 		DetalleProducto detalle_response = null; 
 		try {
 			detalle_response = detalleService.save(detalle); 
-			
+	
 		}catch(Exception e) {
 			response.put("error", "No se encontró el producto");  
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	

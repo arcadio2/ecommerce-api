@@ -39,10 +39,10 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique = true,length = 20) 
+	@Column(unique = true,length = 60) 
 	@NotNull(message = "El nombbre de usuario es requerido")
 	@Length(min = 3,message = "El nombre de usuario debe tener 3 caracteres")
-	@Length(max = 15,message = "El nombre de usuario debe tener menos de 15 caracteres")
+	@Length(max = 60,message = "El nombre de usuario debe tener menos de 60 caracteres")
 
 	private String username; 
 	
@@ -54,14 +54,14 @@ public class Usuario implements Serializable{
 	
 	@NotNull(message = "El nombre es requerido")
 	//@Length(min = 3,message = "El nombre debe tener 3 caracteres")
-	@Length(max = 15,message = "El nombre debe tener menos de 20 caracteres")
+	@Length(max = 30,message = "El nombre debe tener menos de 30 caracteres")
 	@Pattern(regexp = "^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,3}(?:\\W+[-\\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$",
 	message = "El nombre debe tener solo letras y al menos 3 caracteres")
 	private String nombre; 	
 	
 	
 	@NotNull(message = "El apellido es requerido")
-	@Length(max = 15,message = "El nombre de usuario debe tener menos de 20 caracteres")
+	@Length(max = 40,message = "El nombre de usuario debe tener menos de 40 caracteres")
 	@Pattern(regexp = "^[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\\W+[-a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){0,5}(?:\\W+[-\\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]]+)?$",
 			message = "El apellido debe tener solo letras")
 	private String apellido;

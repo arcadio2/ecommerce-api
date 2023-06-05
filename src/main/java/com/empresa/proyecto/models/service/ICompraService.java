@@ -12,9 +12,14 @@ public interface ICompraService {
 	
 	public List<Compra> getAll(); 
 	
+	public Compra getById(Long id);
+	 
 	public void delete(Compra compra); 
 	
 	public List<Compra> saveAll(List<Compra> compras);
 	
+	public Compra getByProductoAndUsuario(String nombre,Long id_producto);
+	
+	public boolean getByProductoAndUsuarioExist(String nombre,Long id_producto);
 
 }

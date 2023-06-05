@@ -50,4 +50,26 @@ public class CompraService implements ICompraService{
 		return comprasDao.saveAll(compras);
 	}
 
+	@Override
+	public Compra getById(Long id) {
+		// TODO Auto-generated method stub
+		return comprasDao.getById(id);
+	}
+
+	@Override
+	public Compra getByProductoAndUsuario(String nombre, Long id_producto) {
+		// TODO Auto-generated method stub
+		return comprasDao.getByUsernameAndProduct(nombre, id_producto);
+	}
+
+	@Override
+	public boolean getByProductoAndUsuarioExist(String nombre, Long id_producto) {
+		// TODO Auto-generated method stub
+		Compra compra = comprasDao.getByUsernameAndProduct(nombre, id_producto);
+		if(compra!=null) {
+			return true;
+		}
+		return false; 
+	}
+
 }
