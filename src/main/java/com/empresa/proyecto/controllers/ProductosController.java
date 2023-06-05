@@ -98,6 +98,14 @@ public class ProductosController {
 
 	}
 
+	@GetMapping("/novedades")
+	//@ResponseStatus(HttpStatus.OK)
+	public List<Producto> getProductosNovedades(){
+		List<Producto> productos = productoService.getNovedades(); 
+		
+		return productos; 
+
+	}
 	@GetMapping("/get/{nombre}")
 	//@ResponseStatus(HttpStatus.OK)
 	public List<Producto> getProductosNombre(@PathVariable String nombre){
