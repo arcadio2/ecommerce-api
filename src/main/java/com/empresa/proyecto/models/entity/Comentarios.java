@@ -2,6 +2,7 @@ package com.empresa.proyecto.models.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,7 @@ public class Comentarios implements Serializable{
 	private String username; 
 	 
 	 
+	@Column(length = 2000)
 	private String comentario;
 	  
 	private Double valoracion; 

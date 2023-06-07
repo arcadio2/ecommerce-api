@@ -31,12 +31,13 @@ public class Producto implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id; 
-	@Column(unique = true) 
+
 	@NotNull(message = "Debes ingresar un nombre")
 	private String nombre; 
 	 
 	
 	@NotNull(message = "Debes ingresar una descripción")
+	@Column(length = 2000)
 	private String descripcion; 
 	
 	@NotNull(message = "Debes ingresar un precio")
