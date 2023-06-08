@@ -13,8 +13,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.annotation.security.PermitAll;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -50,6 +52,7 @@ import com.empresa.proyecto.models.entity.Producto;
 import com.empresa.proyecto.models.entity.Role;
 
 import com.empresa.proyecto.models.service.IUsuarioService;
+import com.empresa.proyecto.services.IEmailService;
 import com.empresa.proyecto.services.IFileService;
 import com.empresa.proyecto.services.IValidationService;
 
@@ -72,6 +75,9 @@ public class UsuarioController {
 	private TokenStore tokenStore;
 	
 	@Autowired
+	IEmailService emailService;
+	
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@PostMapping("/user/create")
@@ -79,6 +85,7 @@ public class UsuarioController {
 	//@Secured({})
 	public ResponseEntity<?> createUser(@RequestBody @Valid Usuario usuario, BindingResult result){
 		
+		String ip="localhost";
 		Map<String, Object> response = new HashMap<>();
 		
 			
@@ -104,8 +111,17 @@ public class UsuarioController {
 				usuario.setRoles(roles); 
 				
 				usuario.setEnabled(true);
+				String token = UUID.randomUUID().toString();
+				usuario.setToken(token);
 				usuario.setPassword( passwordEncoder.encode( usuario.getPassword() )); 
 				Usuario nuevoUsuario = usuarioService.save(usuario); 
+				
+				
+				Map<String, Object> datos = new HashMap<>();
+				datos.put("usuario", usuario.getNombre());
+				datos.put("url", ""+ip+":4200/confirm?uiid="+token); 
+		
+				emailService.sendWithAttach2("shinesadecv170@gmail.com", nuevoUsuario.getEmail(), "Shine: Confirmar correo", "Por favor confirma tu cuenta",datos);
 				
 				response.put("mensaje", "El usuario ha sido creado con éxito");
 				response.put("usuario",nuevoUsuario); 
@@ -117,6 +133,27 @@ public class UsuarioController {
 			}   
 
 	}
+	
+	//@PermitAll
+	//@Secured("permitAll()")
+	@PostMapping("/user/confirm")
+	public ResponseEntity<?> confirmarUsuario(@RequestBody String token) {
+		Map<String, Object> response = new HashMap<>();
+		//String username = auth.getName();
+		Usuario usuario = null;  
+		try {
+			usuario = usuarioService.getBytoken(token);
+			usuario.setActive(true); 
+			usuario.setToken(""); 
+			usuario = usuarioService.save(usuario); 
+		}catch(Exception e) {
+			response.put("error", "Ha ocurrido un error"); 
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
+		}
+		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
+		
+	}
+	
 	@GetMapping("/user/profile/{username}")
 	@Secured({"ROLE_ADMIN","ROLE_USER"})
 	public ResponseEntity<?> perfil(@PathVariable String username){

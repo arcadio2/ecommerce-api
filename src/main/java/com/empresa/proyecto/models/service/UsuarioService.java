@@ -191,4 +191,11 @@ public class UsuarioService implements UserDetailsService,IUsuarioService{
 		// TODO Auto-generated method stub
 		return usuarioDao.finByEmail(email);
 	}
+
+
+	@Override
+	public Usuario getBytoken(String token) {
+		// TODO Auto-generated method stub
+		return usuarioDao.getByToken(token);
+	}
 }

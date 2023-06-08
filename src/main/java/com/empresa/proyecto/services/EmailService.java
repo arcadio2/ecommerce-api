@@ -61,4 +61,43 @@ public class EmailService implements IEmailService {
 	    	System.out.println(e.getStackTrace());
     	}
     }
+    
+    
+    @Override
+    public void sendWithAttach2(String from, String to, String subject,
+                               String text, Map<String, Object> model) throws MessagingException{
+    	
+    	try {
+    		MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            
+            Template plantilla = config.getTemplate("confirmar.html"); 
+            String html = FreeMarkerTemplateUtils.processTemplateIntoString(plantilla, model);
+            String url = (String) model.get("url");
+
+            // Escapar los caracteres especiales en el URL
+            String escapedUrl = url.replace("&", "&amp;")
+                                   .replace("<", "&lt;")
+                                   .replace(">", "&gt;")
+                                   .replace("\"", "&quot;")
+                                   .replace("'", "&#39;");
+
+            // Reemplazar ${url} en el contenido HTML
+            html = html.replace("${url}", escapedUrl);
+            
+            
+            helper.setFrom(from);
+            helper.setTo(to);
+            helper.setSubject(subject);
+            //helper.setText(html, true);
+            message.setContent(html, "text/html; charset=utf-8");
+            
+            mailSender.send(message);
+    	}catch(Exception e) {
+	    	System.out.println("ha ocurrido un error inesperado");
+	    	System.out.println(e.getMessage());
+	    	System.out.println(e.getStackTrace());
+    	}
+    }
+    
 }

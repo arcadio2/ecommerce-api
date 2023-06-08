@@ -52,6 +52,8 @@ public class Usuario implements Serializable{
 	private String password; 
 	private boolean enabled; 
 	
+	private boolean active; 
+	
 	@NotNull(message = "El nombre es requerido")
 	//@Length(min = 3,message = "El nombre debe tener 3 caracteres")
 	@Length(max = 30,message = "El nombre debe tener menos de 30 caracteres")
@@ -93,6 +95,8 @@ public class Usuario implements Serializable{
 	@JoinColumn(name = "usuario_id")
 	@JsonIgnore
 	private List<Compra> compras;  
+	
+	private String token; 
 	
 	
 	public Usuario() {
@@ -178,6 +182,22 @@ public class Usuario implements Serializable{
 
 	public void setCompras(List<Compra> compras) {
 		this.compras = compras;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 

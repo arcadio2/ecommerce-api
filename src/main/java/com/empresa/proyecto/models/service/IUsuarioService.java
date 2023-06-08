@@ -12,6 +12,9 @@ import com.empresa.proyecto.models.entity.Usuario;
 
 public interface IUsuarioService {
 	public Usuario findByUsername(String username);
+	
+	public Usuario getBytoken(String token);
+	
 	public Usuario findByEmail(String email);
 	public Usuario save(Usuario usuario); 
 	

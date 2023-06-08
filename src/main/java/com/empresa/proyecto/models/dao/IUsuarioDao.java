@@ -14,6 +14,9 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
 	@Query("select u from Usuario u where u.username=?1")
 	public Usuario finByUsername2(String username);
 	
+	@Query("select u from Usuario u where u.token=?1")
+	public Usuario getByToken(String token);
+	
 	@Query("select u from Usuario u where u.email=?1")
 	public Usuario finByEmail(String email);
 	

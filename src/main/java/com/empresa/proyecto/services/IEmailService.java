@@ -12,4 +12,7 @@ public interface IEmailService {
 	
 	public void sendWithAttach(String from, String to, String subject,
             String text, Map<String, Object> model) throws MessagingException;
+
+	public void sendWithAttach2(String from, String to, String subject,
+            String text, Map<String, Object> model) throws MessagingException;
 }
