@@ -150,6 +150,11 @@ public class UsuarioController {
 			response.put("error", "Ha ocurrido un error"); 
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR); 	
 		}
+		if(usuario==null) {
+			response.put("message", "No se encontro el usuario");
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND); 	
+		}
+		response.put("message", "Se ha activado el usuario");
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 		
 	}
